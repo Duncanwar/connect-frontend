@@ -17,7 +17,8 @@ jwt.verify(token, jwt_Secret,(err,payload)=>{
     User.findById(_id).then(
         userdata=>{
             req.user = userdata
-})
-next()
+            next()
+        })
+
 })
 }
