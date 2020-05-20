@@ -1,7 +1,7 @@
 
 const express = require('express');
 const app = express();
-const PORT = 5000
+const PORT = 8000
 const mongoose = require("mongoose")
 const {MONGOURI} = require('./keys')
 const bodyParser = require('body-parser');
