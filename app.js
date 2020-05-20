@@ -1,15 +1,12 @@
 
 const express = require('express');
 const app = express();
-const PORT = 8000
+const PORT = 3000
 const mongoose = require("mongoose")
 const {MONGOURI} = require('./keys')
 const bodyParser = require('body-parser');
 
-require('./models/user')
-app.use(bodyParser.urlencoded({extended:true}));
-app.use(bodyParser.json());
-app.use(require('./routes/auth'))
+
 
 mongoose.connect(MONGOURI,{
     useNewUrlParser: true,
@@ -21,6 +18,12 @@ mongoose.connection.on('connected',()=>{
 mongoose.connection.on('error',(err)=>{
     console.log("err",err)
 })
+
+require('./models/user')
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
+app.use(require('./routes/auth'))
+
 app.listen(PORT,()=>{
     console.log("server is running on,PORT")
 })
