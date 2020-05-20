@@ -4,10 +4,12 @@ const app = express();
 const PORT = 5000
 const mongoose = require("mongoose")
 const {MONGOURI} = require('./keys')
+const bodyParser = require('body-parser');
 
 require('./models/user')
-
-app.use()
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
+app.use(require('./routes/auth'))
 
 mongoose.connect(MONGOURI,{
     useNewUrlParser: true,
