@@ -18,7 +18,7 @@ const Routing = () =>{
     const user = JSON.parse(localStorage.getItem("user"))
 if(user){
   dispatch({type:"USER",payload:user})
-  history.push('/')
+  
 }else{
   history.push('/signin')
 }
@@ -50,7 +50,6 @@ function App() {
   return (
     <UserContext.Provider value={{state,dispatch}} >
     <BrowserRouter>
-
     <Nav />
     <Routing />
     </BrowserRouter>
