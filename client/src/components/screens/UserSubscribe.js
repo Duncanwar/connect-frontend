@@ -6,7 +6,7 @@ const Home = ()=>{
     const [data,setData] = useState([])
     const {state,dispatch}= useContext(UserContext)
     useEffect(()=>{
-        fetch('/allpost',{
+        fetch('/followingpost',{
             headers:{
                 "Authorization":"Bearer "+localStorage.getItem("jwt")
             }
@@ -142,17 +142,16 @@ const Home = ()=>{
     {
         item.comments.map(record=>{
             return(
-            <h6 key={record._id}><span style={{fontWeight:"500"}} >{record.postedBy.name} </span>   {record.text}</h6>
+            <h6 key={record._id}><span style={{fontWeight:"500"}} >{record.postedBy.name} </span> {record.text}</h6>
             )
         })
     }
     <form onSubmit={(e)=>{
         e.preventDefault()
         makeComment(e.target[0].value,item._id)
-    
     }}>
                     
-                        <input type="text" placeholder="add comment"  />
+                        <input type="text" placeholder="add comment" />
                         </form>
                 </div>
 

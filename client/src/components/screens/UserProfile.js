@@ -4,8 +4,10 @@ import {useParams} from 'react-router-dom'
 
 const Profile = ()=>{
     const [userProfile,setProfile]= useState(null)
-    const {state,dispath} = useContext(UserContext)
     const {userid} = useParams()
+    const {state,dispatch} = useContext(UserContext)
+   const [showFollow,setFollow] = useState(true)
+   
     useEffect(()=>{
         fetch(`/user/${userid}`,{
             headers:{
@@ -17,6 +19,59 @@ const Profile = ()=>{
            setProfile(result)
         })
     },[])
+    
+    const viewfollow =()=>{
+        fetch('/follow',{
+            method:'put',
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization":"Bearer "+localStorage.getItem("jwt")
+            },body:JSON.stringify({
+                followId:userid
+            })
+        }).then(res=>res.json())
+        .then(data=>{
+           console.log(data,setFollow)
+           dispatch({type:"UPDATE",payload:{following:data.following,followers:data.followers}})
+           localStorage.setItem("user",JSON.stringify(data))
+           setProfile((prevState)=>{
+               
+               return {
+                   ...prevState,
+                   user:{...prevState.user,
+                followers:[...prevState.user.followers,data._id]
+                }
+               }
+           })
+           setFollow(false)
+        })
+    }
+    const unviewfollow =()=>{
+        fetch('/unfollow',{
+            method:'put',
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization":"Bearer "+localStorage.getItem("jwt")
+            },body:JSON.stringify({
+                unfollowId:userid
+            })
+        }).then(res=>res.json())
+        .then(data=>{
+           console.log(data)
+           dispatch({type:"UPDATE",payload:{following:data.following,followers:data.followers}})
+           localStorage.setItem("user",JSON.stringify(data))
+           setProfile((prevState)=>{
+               const newFollower = prevState.user.followers.filter(item=>item != data._id)
+               return {
+                   ...prevState,
+                   user:{...prevState.user,
+                followers:newFollower
+                }
+               }
+           })
+           setFollow(true)
+        })
+    }
     return (
         <>
         {userProfile ?  
@@ -38,8 +93,10 @@ const Profile = ()=>{
                <div style={{display:"flex",
                 justifyContent:"space-between", width:"108%"}}>
                    <h5>{userProfile.post.length} posts</h5>
-                   <h5>40 followers</h5>
-                   <h5>40 following</h5>
+        <h5 onClick={()=>viewfollow(userProfile.user._id)}>{userProfile.user.followers.length} followers</h5>
+        <h5>{userProfile.user.following.length}following</h5>
+        {showFollow? <button onClick={()=>viewfollow()}>follow</button> :  <button onClick={()=>unviewfollow()}>unfollow</button>}
+       
                </div>
            </div>
            </div>
