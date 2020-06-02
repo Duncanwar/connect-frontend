@@ -8,6 +8,7 @@ const {state,dispatch} = useContext(UserContext)
 const history = useHistory();
 const [password,setPassword]= useState("")
 const [email,setEmail]= useState("")
+
 const PostData = ()=>{
     
     if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
@@ -35,7 +36,9 @@ fetch("/signin",{
             dispatch({type:"USER",payload:data.user})
             M.toast({html: "signin success",})
             history.push('/')
+            console.log(data,state)
         }
+      
     }).catch(err=>{
         console.log(err)
     })
