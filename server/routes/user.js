@@ -56,4 +56,8 @@ router.put('/unfollow',requiredLogin,(req,res)=>{
     })
 })
 
+router.post('/updatepic',requiredLogin, (req,res)=>{
+    
+})
+
 module.exports = router

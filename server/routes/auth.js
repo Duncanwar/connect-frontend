@@ -12,7 +12,7 @@ router.get('/protected',requireLogin,(req,res)=>{
 })
 
 router.post('/signup',(req,res)=>{
-const {name,email,password} = req.body;
+const {name,email,password,pic} = req.body;
 if(!email||!password||!name){
     return res.status(422).json({error:"please add all fields"});
 }
@@ -26,7 +26,8 @@ User.findOne({email:email})
         const user = new User({
             email,
             password:hashedpassword,
-            name
+            name,
+            photo:pic
         })
         user.save()
         .then(user=>{
@@ -44,7 +45,7 @@ User.findOne({email:email})
 })
 
 router.post('/signin', (req,res)=>{
-    const {email,password}= req.body;
+    const {email,password,pic}= req.body;
     if(!email || !password){
         res.status(422).json({error:"please add email or password"})
     }
@@ -57,8 +58,8 @@ router.post('/signin', (req,res)=>{
         .then(doMatch=>{
             if(doMatch){
             const token = jwt.sign({_id:savedUser._id},jwt_Secret);
-            const {_id,name,email,followers,following} = savedUser
-            res.json({token,user:{_id,name,email,followers,following}})
+            const {_id,name,email,followers,following,photo} = savedUser
+            res.json({token,user:{_id,name,email,followers,following,photo}})
             res.json({message:"successfully signed in"})
             }
         else{
