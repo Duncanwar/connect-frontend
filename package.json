@@ -1,0 +1,29 @@
+{
+  "name": "insta-clone",
+  "version": "1.0.0",
+  "description": "Full stack Mern using udemy course",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js",
+    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Duncanwar/Insta-clone.git"
+  },
+  "author": "Duncan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Duncanwar/Insta-clone/issues"
+  },
+  "homepage": "https://github.com/Duncanwar/Insta-clone#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.14",
+    "nodemon": "^2.0.4"
+  }
+}
