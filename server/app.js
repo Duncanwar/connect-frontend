@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const PORT = 5000
 const mongoose = require("mongoose")
-const {MONGOURI} = require('./keys')
+const {MONGOURI} = require('./config/keys')
 const bodyParser = require('body-parser');
 
 mongoose.connect(MONGOURI,{
