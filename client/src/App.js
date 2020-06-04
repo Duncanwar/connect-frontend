@@ -24,6 +24,7 @@ if(user){
   history.push('/signin')
 }
   },[])
+
   return(
     <Switch>
 <Route exact path="/" >
@@ -53,7 +54,7 @@ if(user){
 
 function App() {
   const [state,dispatch] = useReducer(reducer,initialState)
-  
+  console.log(state)
   return (
     <UserContext.Provider value={{state,dispatch}} >
     <BrowserRouter>
