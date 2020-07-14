@@ -10,7 +10,9 @@ import CreatePost from './components/screens/CreatePost'
 import {reducer,initialState} from './reducers/userReducer'
 import UserProfile from './components/screens/UserProfile'
 import UserSubscribe from './components/screens/UserSubscribe'
+import Try from './try';
 export const UserContext = createContext()
+
 
 const Routing = () =>{
   const history = useHistory()
@@ -57,6 +59,7 @@ function App() {
   console.log(state)
   return (
     <UserContext.Provider value={{state,dispatch}} >
+      <Try></Try>
     <BrowserRouter>
     <Nav />
     <Routing />

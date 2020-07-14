@@ -2,7 +2,7 @@ import React,{useState, useEffect} from 'react'
 import {Link,useHistory} from 'react-router-dom'
 import M from 'materialize-css'
 
-const SignIn = ()=>{
+const SignUp = ()=>{
     const history = useHistory();
 const [name,setName]= useState("")
 const [password,setPassword]= useState("")
@@ -94,11 +94,11 @@ onChange={(e)=>setPassword(e.target.value)}
       <div className="btn">
         <span>Upload profile</span>
         <input type="file"
-        onChange={(e)=>setImage(e.target.files[0])}
+        onChange={(e)=>setImage(URL.createObjectURL(e.target.files[0]),)}
         />
       </div>
-      <div className="file-path-wrapper">
-        <input className="file-path validate" type="text"/>
+      <div className="responsive-img">
+        <img className="responsive-img" src={image}/>
       </div>
     </div>
 <button 
@@ -110,4 +110,4 @@ className="btn waves-effect waves-light #64b5f6 blue lighten-2" onClick={()=>Pos
        </div>
     )
 }
-export default SignIn
+export default SignUp;
