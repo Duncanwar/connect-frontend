@@ -13,6 +13,7 @@ const Home = ()=>{
         }).then(res=>res.json())
         .then(result =>{
             console.log(result)
+            {console.log(state)}
             setData(result.posts)
         })
     },[])
@@ -109,6 +110,7 @@ const Home = ()=>{
             const newData = data.filter(item=>{
                 return item._id !== result._id
             })
+            console.log(newData)
             setData(newData)
         }).catch(err=>console.log(err))
     }

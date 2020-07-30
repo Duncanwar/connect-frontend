@@ -30,7 +30,7 @@ const NavBar = ()=>{
           <Link to={state ?"/":"/signin"} className="brand-logo left">Instagram</Link>
           <ul id="nav-mobile" className="right">
            {renderList()}
-            
+           
           </ul>
         </div>
       </nav>

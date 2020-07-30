@@ -1,6 +1,7 @@
-import { Schema, model } from 'mongoose'
-const {ObjectId}= Schema.Types
-const postSchema = new Schema({
+const mongoose = require('mongoose')
+
+const {ObjectId}= mongoose.Schema.Types
+const postSchema = new mongoose.Schema({
     title:{
         type:String,
         required:true
@@ -28,4 +29,4 @@ const postSchema = new Schema({
     }
 })
 
-model("Post",postSchema)
+mongoose.model("Post",postSchema)
