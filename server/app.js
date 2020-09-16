@@ -5,6 +5,7 @@ const PORT = process.env.PORT || 5000
 const mongoose = require("mongoose")
 const {MONGOURI} = require('./config/keys')
 const bodyParser = require('body-parser');
+const cors = require('cors')
 
 require('dotenv').config()
 
@@ -24,6 +25,7 @@ require('./models/post')
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
+app.use(cors())
 app.use(require('./routes/auth'))
 app.use(require('./routes/post'))
 app.use(require('./routes/user'))
