@@ -9,7 +9,7 @@ const Profile = ()=>{
    const [showFollow,setFollow] = useState(state ? !state.following.includes(userid): true)
    
     useEffect(()=>{
-        fetch(`/user/${userid}`,{
+        fetch(`https://sleepy-shore-85012.herokuapp.com/user/${userid}`,{
             headers:{
                 "Authorization":"Bearer " +localStorage.getItem("jwt") 
             }

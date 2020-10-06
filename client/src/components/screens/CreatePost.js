@@ -11,7 +11,7 @@ const CreatePost=()=>{
 const [url,setUrl] = useState("")
 useEffect(()=>{
 if(url){
-  fetch("/createpost",{
+  fetch("https://sleepy-shore-85012.herokuapp.com/createpost",{
     method:"post",
     headers:{
         "Content-Type":"application/json",

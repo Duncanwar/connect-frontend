@@ -7,7 +7,7 @@ const Profile = ()=>{
     const [image,setImage] = useState("")
     useEffect(()=>{
         console.log(state)
-        fetch('/myposts',{
+        fetch('https://sleepy-shore-85012.herokuapp.com/allpost/myposts',{
             headers:{
                 "Authorization":"Bearer " +localStorage.getItem("jwt") 
             }
