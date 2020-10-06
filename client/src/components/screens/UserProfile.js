@@ -21,7 +21,7 @@ const Profile = ()=>{
     },[])
     
     const viewfollow =()=>{
-        fetch('/follow',{
+        fetch('https://sleepy-shore-85012.herokuapp.com/follow',{
             method:'put',
             headers:{
                 "Content-Type":"application/json",
