@@ -16,7 +16,7 @@ const PostData = ()=>{
 return 
 }   
 
-fetch("https://sleepy-shore-85012.herokuapp.com/signin",{
+fetch("/signin",{
     method:"post",
     headers:{
         "Content-Type":"application/json",

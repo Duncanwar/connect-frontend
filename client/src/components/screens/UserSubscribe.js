@@ -6,7 +6,7 @@ const Home = ()=>{
     const [data,setData] = useState([])
     const {state,dispatch}= useContext(UserContext)
     useEffect(()=>{
-        fetch('https://sleepy-shore-85012.herokuapp.com/followingpost',{
+        fetch('/followingpost',{
             headers:{
                 "Authorization":"Bearer "+localStorage.getItem("jwt")
             }
@@ -18,7 +18,7 @@ const Home = ()=>{
     },[])
 
     const likePost =(id)=>{
-        fetch('https://sleepy-shore-85012.herokuapp.com/like',{
+        fetch('/like',{
             method:"put",
             headers:{
                 "Content-Type":"application/json",
@@ -46,7 +46,7 @@ const Home = ()=>{
         
     }
     const unlikePost =(id)=>{
-        fetch('https://sleepy-shore-85012.herokuapp.com/unlike',{
+        fetch('/unlike',{
             method:"put",
             headers:{
                 "Content-Type":"application/json",
@@ -72,7 +72,7 @@ const Home = ()=>{
         })
     }
     const makeComment =(text,postId)=>{
-        fetch("https://sleepy-shore-85012.herokuapp.com/comment",{
+        fetch("/comment",{
             method:"put",
             headers:{
                 "Content-Type":"application/json",
@@ -98,7 +98,7 @@ const Home = ()=>{
     }
 
     const deletePost = (postid)=>{
-        fetch(`https://sleepy-shore-85012.herokuapp.com/deletepost/${postid}`,{
+        fetch(`deletepost/${postid}`,{
             method:"delete",
             headers:{
                 Authorization:"Bearer "+localStorage.getItem("jwt")

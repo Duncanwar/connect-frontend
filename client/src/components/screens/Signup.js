@@ -36,7 +36,7 @@ const uploadFields=()=>{
         M.toast({html:"invalid email"})
         return 
         }
-            fetch("https://sleepy-shore-85012.herokuapp.com/signup",{
+            fetch("/signup",{
         method:"post",
         headers:{
             "Content-Type":"application/json",
