@@ -6,12 +6,12 @@ const mongoose = require("mongoose")
 const {MONGOURI} = require('./config/keys')
 const bodyParser = require('body-parser');
 const cors = require('cors')
-
 require('dotenv').config()
 
 mongoose.connect(MONGOURI,{
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify:false
 })
 mongoose.connection.on('connected',()=>{
     console.log("Connected to mongo yeah")

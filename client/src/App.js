@@ -10,20 +10,19 @@ import CreatePost from './components/screens/CreatePost'
 import {reducer,initialState} from './reducers/userReducer'
 import UserProfile from './components/screens/UserProfile'
 import UserSubscribe from './components/screens/UserSubscribe'
-import Try from './try';
+import Reset from "./components/screens/Reset"
+import NewPassword from "./components/screens/Newpassword";
 export const UserContext = createContext()
-
 
 const Routing = () =>{
   const history = useHistory()
   const {state,dispatch} = useContext(UserContext)
   useEffect(()=>{
     const user = JSON.parse(localStorage.getItem("user"))
-    
 if(user){
   dispatch({type:"USER",payload:user})
-  console.log(state);
 }else{
+  if(!history.location.pathname.startsWith("/reset"))
   history.push('/signin')
 }
   },[])
@@ -51,16 +50,20 @@ if(user){
       <Route path="/followingpost">
         <UserSubscribe />
       </Route>
+      <Route exact path="/reset">
+        <Reset />
+      </Route>
+      <Route path="/reset/:token">
+        <NewPassword />
+      </Route>
     </Switch>
   )
 }
 
 function App() {
   const [state,dispatch] = useReducer(reducer,initialState)
-  console.log(state)
   return (
     <UserContext.Provider value={{state,dispatch}} >
-      <Try></Try>
     <BrowserRouter>
     <Nav />
     <Routing />

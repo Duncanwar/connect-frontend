@@ -6,14 +6,12 @@ const Profile = ()=>{
     const {state,dispatch} = useContext(UserContext)
     const [image,setImage] = useState("")
     useEffect(()=>{
-        console.log(state)
         fetch('/myposts',{
             headers:{
                 "Authorization":"Bearer " +localStorage.getItem("jwt") 
             }
         }).then(res=>res.json())
         .then(result=>{
-            console.log(result,state)
            setPics(result.mypost)
         })
     },[])
@@ -43,7 +41,6 @@ fetch("https://api.cloudinary.com/v1_1/semugeshi/image/upload",{
     
 }).then(res=>res.json())
 .then(result=>{
-    console.log(result)
     localStorage.setItem("user",JSON.stringify({...state,photo:result.pic}))
     dispatch({type:"UPDATEPIC",payload:result.pic})
 })
