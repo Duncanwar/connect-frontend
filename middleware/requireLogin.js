@@ -8,15 +8,12 @@ module.exports = (req,res,next)=>{
     if(!authorization){
         res.status(401).json({error:"You must be logged in"})
     }
-    console.log(authorization);
   const token =  authorization.replace("Bearer ","");
-  console.log(token);
 jwt.verify(token, jwt_Secret,(err,payload)=>{
     if(err){
         return res.status(401).json({error:"You must be logged in"})
     }
             req.user = payload;
             next()
-
 })
 }
