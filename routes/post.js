@@ -4,10 +4,11 @@ const mongoose = require('mongoose');
 const requiredLogin = require('../middleware/requireLogin');
 const Post = mongoose.model("Post");
 
-
 router.get('/allpost',requiredLogin,(req,res)=>{
     Post.find()
     .populate("postedBy","_id name")
+    .populate("comments.postedBy","_id name")
+    .sort('-createdAt')
     .then(posts=>{
         res.json({posts})
     })
@@ -20,6 +21,7 @@ router.get('/followingpost',requiredLogin,(req,res)=>{
     Post.find({postedBy:{$in:req.user.following}})
     .populate("postedBy","_id name")
     .populate("comments.postedBy","_id name")
+    .sort("-createdAt")
     .then(posts=>res.json({posts}))
     .catch(err=>console.log(err))
 })
@@ -109,7 +111,6 @@ router.delete("/deletepost/:postId",requiredLogin,(req,res)=>{
         if(err || !post){
             return res.status(422).json({error:err})
         }
-        console.log(req.user._id)
         if(post.postedBy._id.toString() === req.user._id.toString()){
             post.remove()
             .then(result=>{
