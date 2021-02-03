@@ -38,7 +38,7 @@ if(user){
       <Route path="/signup">
         <Signup/>
       </Route>
-      <Route exact path="/profile">
+      <Route exact path = "/profile">
         <Profile />
       </Route>
       <Route path="/createpost">
