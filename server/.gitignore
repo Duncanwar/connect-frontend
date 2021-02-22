@@ -7,3 +7,4 @@ node_modules
 dist
 .gitignore~HEAD
 config/dev.js
+dist

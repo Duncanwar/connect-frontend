@@ -6,7 +6,12 @@ const mongoose = require("mongoose")
 const {MONGOURI} = require('./config/keys')
 const bodyParser = require('body-parser');
 const cors = require('cors')
+<<<<<<< HEAD
 require('dotenv/types').config()
+=======
+
+require('dotenv').config()
+>>>>>>> 9339ba1bf1f1389ad242494697f6613ff479dfcd
 
 mongoose.connect(MONGOURI,{
     useNewUrlParser: true,
