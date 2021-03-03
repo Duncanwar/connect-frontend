@@ -3,6 +3,7 @@ import {UserContext} from '../../App'
 import { Link } from 'react-router-dom'
 
 const Home = ()=>{
+    const url = process.env.REACT_APP_BACKEND_URL
     const [data,setData] = useState([])
     const {state,dispatch}= useContext(UserContext)
     useEffect(()=>{
@@ -18,7 +19,7 @@ const Home = ()=>{
     },[])
 
     const likePost =(id)=>{
-        fetch('/like',{
+        fetch(`${url}/like`,{
             method:"put",
             headers:{
                 "Content-Type":"application/json",
@@ -45,7 +46,7 @@ const Home = ()=>{
         
     }
     const unlikePost =(id)=>{
-        fetch('/unlike',{
+        fetch(`${url}/unlike`,{
             method:"put",
             headers:{
                 "Content-Type":"application/json",
@@ -95,7 +96,7 @@ const Home = ()=>{
     }
 
     const deletePost = (postid)=>{
-        fetch(`deletepost/${postid}`,{
+        fetch(`${url}/deletepost/${postid}`,{
             method:"delete",
             headers:{
                 Authorization:"Bearer "+localStorage.getItem("jwt")

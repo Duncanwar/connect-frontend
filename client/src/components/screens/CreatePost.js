@@ -2,7 +2,6 @@ import React,{useState,useEffect} from 'react'
 import M from 'materialize-css'
 import {useHistory} from 'react-router-dom'
 
-
 const CreatePost=()=>{
   const history = useHistory()
   const [title,setTitle] = useState("")
@@ -11,7 +10,7 @@ const CreatePost=()=>{
 const [url,setUrl] = useState("")
 useEffect(()=>{
 if(url){
-  fetch("/createpost",{
+  fetch(`${process.env.REACT_APP_BACKEND_URL}/createpost`,{
     method:"post",
     headers:{
         "Content-Type":"application/json",
@@ -43,7 +42,7 @@ if(url){
     data.append("file",image)
     data.append("upload_preset","insta-clone")
     data.append("cloud_name","semugeshi")
-    fetch(" https://api.cloudinary.com/v1_1/semugeshi/image/upload",{
+    fetch(process.env.REACT_APP_CLOUDINARY_API,{
       method:'post',
       body:data
     }).then(res=>res.json())
@@ -82,7 +81,7 @@ onChange={(e)=>setBody(e.target.value)}
     </div>
     <button 
 className="btn waves-effect waves-light #64b5f6 blue lighten-2" onClick={()=>postDetails()}>
-    Signup</button>
+    Create Post</button>
         </div>
     )
 }

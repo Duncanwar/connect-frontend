@@ -3,6 +3,7 @@ import {UserContext} from '../../App'
 import {useParams} from 'react-router-dom'
 
 const Profile = ()=>{
+    const url = process.env.REACT_APP_BACKEND_URL
     const [userProfile,setProfile]= useState(null)
     const {userid} = useParams()
     const {state,dispatch} = useContext(UserContext)
@@ -20,7 +21,7 @@ const Profile = ()=>{
     },[])
     
     const viewfollow =()=>{
-        fetch('/follow',{
+        fetch(`${url}/follow`,{
             method:'put',
             headers:{
                 "Content-Type":"application/json",
@@ -45,7 +46,7 @@ const Profile = ()=>{
         })
     }
     const unviewfollow =()=>{
-        fetch('/unfollow',{
+        fetch(`${url}/unfollow`,{
             method:'put',
             headers:{
                 "Content-Type":"application/json",

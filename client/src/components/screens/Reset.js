@@ -13,7 +13,7 @@ const PostData = ()=>{
 return 
 }   
 
-fetch("/reset-password",{
+fetch(`${process.env.REACT_APP_BACKEND_URL}/reset-password`,{
     method:"post",
     headers:{
         "Content-Type":"application/json",

@@ -9,7 +9,7 @@ const [password,setPassword]= useState("")
 const { token } = useParams()
 
 const PostData = ()=>{
-fetch("/new-password",{
+fetch(`${process.env.REACT_APP_BACKEND_URL}/new-password`,{
     method:"post",
     headers:{
         "Content-Type":"application/json",

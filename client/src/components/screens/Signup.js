@@ -36,7 +36,8 @@ const uploadFields=()=>{
         M.toast({html:"invalid email"})
         return 
         }
-            fetch("/signup",{
+            fetch(`  ${ process.env.REACT_APP_BACKEND_URL}
+            /signup`,{
         method:"post",
         headers:{
             "Content-Type":"application/json",

@@ -2,11 +2,12 @@ import React,{useEffect,useState,useContext} from 'react'
 import {UserContext} from '../../App'
 
 const Profile = ()=>{
+    const url = process.env.REACT_APP_BACKEND_URL
     const [mypics,setPics]= useState([])
     const {state,dispatch} = useContext(UserContext)
     const [image,setImage] = useState("")
     useEffect(()=>{
-        fetch('/myposts',{
+        fetch(`${url}/myposts`,{
             headers:{
                 "Authorization":"Bearer " +localStorage.getItem("jwt") 
             }
@@ -22,14 +23,14 @@ const Profile = ()=>{
 data.append("file",image)
 data.append("upload_preset", "insta-clone")
 data.append("cloud_name", "semugeshi")
-fetch("https://api.cloudinary.com/v1_1/semugeshi/image/upload",{
+fetch(process.env.REACT_APP_CLOUDINARY_API,{
     method:"post",
     body:data
 }).then(res=>res.json())
 .then(data=>{
     
 
-    fetch("/updatepic",{
+    fetch(`${url}/updatepic`,{
         method:"put",    
         headers:{
       "Content-Type":"application/json",
