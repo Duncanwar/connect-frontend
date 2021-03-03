@@ -6,12 +6,9 @@ const mongoose = require("mongoose")
 const {MONGOURI} = require('./config/keys')
 const bodyParser = require('body-parser');
 const cors = require('cors')
-<<<<<<< HEAD
-require('dotenv/types').config()
-=======
+const path = require('path')
 
 require('dotenv').config()
->>>>>>> 9339ba1bf1f1389ad242494697f6613ff479dfcd
 
 mongoose.connect(MONGOURI,{
     useNewUrlParser: true,
@@ -31,7 +28,7 @@ require('./models/post')
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.use(cors())
-app,use(express.static(path.join(__dirname,"client","build")))
+app.use(express.static(path.join(__dirname,"client","build")))
 app.use(require('./routes/auth'))
 app.use(require('./routes/post'))
 app.use(require('./routes/user'))

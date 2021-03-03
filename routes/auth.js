@@ -9,10 +9,11 @@ const {jwt_Secret} = require('../config/keys');
 const requireLogin = require('../middleware/requireLogin')
 const nodemailer = require('nodemailer')
 const sendgridTransport = require('nodemailer-sendgrid-transport')
+require('dotenv').config()
 
 const transporter = nodemailer.createTransport(sendgridTransport({
     auth: {
-      api_key: "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"
+      api_key: process.env.SENDGRID_API_KEY
     }
 }))
 
@@ -42,7 +43,7 @@ User.findOne({email:email})
         .then(user=>{
             transporter.sendMail({  
                 to: email,
-                from: "semunda9@gmail.com",
+                from: process.env.EMAIL_SENDER,
                 subject: "Signup",
                 html: "<h1>Welcome to instagram </h1>"
             })
@@ -56,7 +57,7 @@ User.findOne({email:email})
 .catch(err=>{
     console.log(err)
 })
-//res.json({message:"sucessfully posted"})
+
 })
 
 router.post('/signin', (req,res)=>{
@@ -101,11 +102,11 @@ router.post('/reset-password',(req,res)=>{
             user.save().then(result => {
                 transporter.sendMail({
                     to: user.email,
-                    from: "semunda9@gmail.com",
+                    from: process.env.EMAIL_SENDER,
                     subject: "Signup",
                     html: `
                     <p>You requested for password reset</p>
-                    <h5>click in this <a href="http://localhost:3001/reset/${token}">link</a> to reset password</h5>
+                    <h5>click in this <a href="${process.env.FRONT_END_URL}/reset/${token}">link</a> to reset password</h5>
                     `
                 })
                 res.json({message: "check your email"})
