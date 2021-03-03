@@ -16,7 +16,7 @@ const PostData = ()=>{
 return 
 }   
 
-fetch(`${ process.env.REACT_APP_BACKEND_URL
+fetch(`${process.env.REACT_APP_BACKEND_URL
 }/signin`,{
     method:"post",
     headers:{
