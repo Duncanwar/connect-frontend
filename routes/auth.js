@@ -5,7 +5,6 @@ const User = mongoose.model("user")
 const crypto = require("crypto")
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const {jwt_Secret} = require('../config/keys');
 const requireLogin = require('../middleware/requireLogin')
 const nodemailer = require('nodemailer')
 const sendgridTransport = require('nodemailer-sendgrid-transport')
@@ -63,7 +62,7 @@ User.findOne({email:email})
 router.post('/signin', (req,res)=>{
     const {email,password,pic}= req.body;
     if(!email || !password){
-        res.status(422).json({error:"please add email or password"})
+    return    res.status(422).json({error:"please add email or password"})
     }
     User.findOne({email:email})
     .then(savedUser=>{
@@ -75,8 +74,7 @@ router.post('/signin', (req,res)=>{
             if(doMatch){
             const token = jwt.sign({_id:savedUser._id},process.env.JWT_SECRET);
             const {_id,name,email,followers,following,photo} = savedUser
-            res.json({token,user:{_id,name,email,followers,following,photo}})
-            res.json({message:"successfully signed in"})
+       return res.json({token,user:{_id,name,email,followers,following,photo},message:"successfully signed in"})
             }
         else{
         return res.status(422).json({error:"Invalid Email or password"})

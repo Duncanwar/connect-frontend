@@ -3,14 +3,14 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 5000
 const mongoose = require("mongoose")
-const {MONGOURI} = require('./config/keys')
+
 const bodyParser = require('body-parser');
 const cors = require('cors')
 const path = require('path')
 
 require('dotenv').config()
 
-mongoose.connect(MONGOURI,{
+mongoose.connect(process.env.MONGOURI,{
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify:false
