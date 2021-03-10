@@ -31,13 +31,16 @@ fetch(`${process.env.REACT_APP_BACKEND_URL
     .then(data=>{
        if(data.error){
             M.toast({html: data.error, })
+            console.log(process.env.REACT_APP_BACKEND_URL)
         }
         else{
             localStorage.setItem('jwt',data.token)
             localStorage.setItem('user',JSON.stringify(data.user))
             dispatch({type:"USER",payload:data.user})
+            console.log(data)
             M.toast({html: "signin success",})
             history.push('/')
+            console.log(process.env.REACT_APP_BACKEND_URL)
         }
       
     }).catch(err=>{
