@@ -7,7 +7,7 @@ const CreatePost=()=>{
   const [title,setTitle] = useState("")
   const [body,setBody]= useState("")
   const [image,setImage]=useState("")
-const [url,setUrl] = useState("")
+  const [url,setUrl] = useState("")
 useEffect(()=>{
 if(url){
   fetch(`${process.env.REACT_APP_BACKEND_URL}/createpost`,{
@@ -85,4 +85,4 @@ className="btn waves-effect waves-light #64b5f6 blue lighten-2" onClick={()=>pos
         </div>
     )
 }
-export default CreatePost
+export default CreatePost;
