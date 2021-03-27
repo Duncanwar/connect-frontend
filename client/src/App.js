@@ -60,6 +60,11 @@ if(user){
   )
 }
 
+// const Admin = () => {
+//   return(
+    
+//   )
+// }
 function App() {
   const [state,dispatch] = useReducer(reducer,initialState)
   return (

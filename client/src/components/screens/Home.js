@@ -1,6 +1,7 @@
 import React,{useState,useEffect,useContext} from 'react'
 import {UserContext} from '../../App'
 import {Link} from 'react-router-dom'
+import {Card} from "primereact/card"
 const Home  = ()=>{
     const url = process.env.REACT_APP_BACKEND_URL
     const [data,setData] = useState([])
@@ -107,8 +108,7 @@ const Home  = ()=>{
         })
     }
    return (
-       <div className="home">
-           
+       <Card>
            {
                data.map(item=>{
                    return(
@@ -157,9 +157,7 @@ const Home  = ()=>{
                    )
                })
            }
-          
-          
-       </div>
+       </Card>
    )
 }
 
