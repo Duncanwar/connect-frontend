@@ -9,8 +9,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
-    "watch": "webpack --watch"
+    "start": "babel-node app.js",
+    "watch": "webpack --watch",
+    "dev": "nodemon --exec babel-node  app.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,10 @@
   },
   "homepage": "https://github.com/Duncanwar/Insta-clone#readme",
   "dependencies": {
+    "@babel/cli": "^7.13.14",
+    "@babel/node": "^7.13.13",
+    "@babel/preset-env": "^7.13.12",
+    "@babel/register": "^7.13.14",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
@@ -32,7 +37,7 @@
     "mongoose": "^5.9.14",
     "nodemailer": "^6.4.17",
     "nodemailer-sendgrid-transport": "^0.2.0",
-    "nodemon": "^2.0.4",
+    "nodemon": "^2.0.7",
     "path": "^0.12.7",
     "primeflex": "^2.0.0",
     "primeicons": "^4.1.0",
