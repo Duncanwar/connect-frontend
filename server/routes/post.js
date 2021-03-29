@@ -7,7 +7,7 @@ import postControllers from '../controllers/post.controller'
 
 const {getAll} = postControllers
 
-router.get('/allpost', getAll)
+router.get('/allpost',requiredLogin, getAll)
 
 router.get('/followingpost',requiredLogin,(req,res)=>{
     Post.find({postedBy:{$in:req.user.following}})
@@ -18,35 +18,7 @@ router.get('/followingpost',requiredLogin,(req,res)=>{
     .catch(err=>console.log(err))
 })
 
-router.post('/createpost',requiredLogin ,(req,res)=>{
-    const {title,body,pic} = req.body
-    let mediaId;
-    if(!title || !body || !pic){
-        return res.status(422).json({error:"Please add all the fields"})
-    }
-    req.user.password = undefined
-    const media = new Media({
-        media:pic,
-    })
-    media.save().then(result=>{
-        console.log(result)
-        mediaId = result._id
-        console.log(mediaId)
-    })
-    const post = new Post({
-        title,
-        body,
-        photo:pic,
-        postedBy:req.user,
-        mediaId:mediaId
-     }) 
-     post.save().then(result =>{
-         res.json({post:result})
-     })
-     .catch(err=>{
-         console.log(err)
-     })
-})
+router.post('/createpost',requiredLogin,)
 
 router.get("/myposts",requiredLogin ,(req,res)=>{
     Post.find({postedBy:req.user._id})

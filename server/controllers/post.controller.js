@@ -11,10 +11,15 @@ static async getAll(req,res) {
 }
 static async createPost(req, res){
     const {title,body,pic} = req.body
+    let post = {photo:pic, postedBy:req.user, ...req.body, }
     let mediaId;
     if(!title || !body || !pic){
         return res.status(422).json({error:"Please add all the fields"})
     }
     req.user.password = undefined
-}
+//    let post =  new Post(title,
+//     body,
+//     photo:pic,
+//     postedBy:req.user,
+// }
 }
