@@ -28,6 +28,7 @@ router.get('/followingpost',requiredLogin,(req,res)=>{
 
 router.post('/createpost',requiredLogin ,(req,res)=>{
     const {title,body,pic} = req.body
+    console.log(req.body)
     if(!title || !body || !pic){
         return res.status(422).json({error:"Please add all the fields"})
     }

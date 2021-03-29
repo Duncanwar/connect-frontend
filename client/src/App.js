@@ -60,11 +60,17 @@ if(user){
   )
 }
 
-// const Admin = () => {
-//   return(
-    
-//   )
-// }
+const Admin = () => {
+  return(
+    <Switch>
+      <Route>
+        {/* <AppShell path="/dashboard">
+          <Dashboard />
+        </AppShell> */}
+      </Route>
+      </Switch>
+  )
+}
 function App() {
   const [state,dispatch] = useReducer(reducer,initialState)
   return (
