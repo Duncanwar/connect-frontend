@@ -2,7 +2,7 @@ const PostSchema = require('../models/post');
 
 export default class PostService{
     static async create(post){
-        return await post.save()
+        return await PostSchema.save(post)
     }
     static async findAll(){
      return await PostSchema.find()

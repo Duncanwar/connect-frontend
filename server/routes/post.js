@@ -5,7 +5,7 @@ const requiredLogin = require('../middleware/requireLogin');
 
 import postControllers from '../controllers/post.controller'
 
-const {getAll} = postControllers
+const {getAll, createPost} = postControllers
 
 router.get('/allpost',requiredLogin, getAll)
 
@@ -18,7 +18,7 @@ router.get('/followingpost',requiredLogin,(req,res)=>{
     .catch(err=>console.log(err))
 })
 
-router.post('/createpost',requiredLogin,)
+router.post('/createpost', createPost)
 
 router.get("/myposts",requiredLogin ,(req,res)=>{
     Post.find({postedBy:req.user._id})
@@ -94,8 +94,6 @@ router.delete("/deletepost/:postId",requiredLogin,(req,res)=>{
             })
         }
     })
-      
-
 })
 
 module.exports = router
