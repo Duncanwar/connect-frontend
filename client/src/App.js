@@ -12,6 +12,8 @@ import UserProfile from './components/screens/UserProfile'
 import UserSubscribe from './components/screens/UserSubscribe'
 import Reset from "./components/screens/Reset"
 import NewPassword from "./components/screens/Newpassword";
+import Chat from "./components/screens/Chat"
+
 export const UserContext = createContext()
 
 const Routing = () =>{
@@ -55,6 +57,9 @@ if(user){
       </Route>
       <Route path="/reset/:token">
         <NewPassword />
+      </Route>
+      <Route path="/chat">
+        <Chat />
       </Route>
     </Switch>
   )

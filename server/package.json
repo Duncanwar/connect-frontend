@@ -33,6 +33,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "http": "0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.14",
     "nodemailer": "^6.4.17",
@@ -44,6 +45,7 @@
     "primeflex": "^2.0.0",
     "primeicons": "^4.1.0",
     "primereact": "^6.2.1",
+    "socket.io": "^2.2.0",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
   }

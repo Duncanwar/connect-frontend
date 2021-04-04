@@ -9,12 +9,10 @@ const adminSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    resetToken: String,
-    expireToken: Date,
     password:{
         type:String,
         required:true
-    },
+    }
 })
 
-mongoose.Schema("admin", adminSchema);
+module.exports = mongoose.model("admin", adminSchema);

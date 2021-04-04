@@ -1,20 +1,24 @@
 import React,{useState,useEffect, useContext} from 'react'
 import {UserContext} from '../../App'
 import { Link } from 'react-router-dom'
+import axios from 'axios';
 
-const Home = ()=>{
+const UserSubscribe = ()=>{
     const url = process.env.REACT_APP_BACKEND_URL
     const [data,setData] = useState([])
     const {state,dispatch}= useContext(UserContext)
     useEffect(()=>{
-        fetch('/followingpost',{
+ //       const data = await axios.get()
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/followingpost`,{
             headers:{
                 "Authorization":"Bearer "+localStorage.getItem("jwt")
             }
-        }).then(res=>res.json())
+        }).then(res=>{
+            res.json()
+            })
         .then(result =>{
-    
-            setData(result.posts)
+        //     console.log(result)
+        //    setData(result)
         })
     },[])
 
@@ -160,4 +164,4 @@ const Home = ()=>{
         </div>
     )
 }
-export default Home
+export default UserSubscribe
