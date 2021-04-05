@@ -10,7 +10,7 @@ const router = express.Router();
 router.use('/',auth)
 router.use('/',post)
 router.use('/',user)
-router.use('/', chat);
+router.use('/',chat);
 router.use('/',admin)
 
 module.exports = router;

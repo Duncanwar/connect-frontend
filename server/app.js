@@ -17,14 +17,14 @@ app.use(cors())
 app.use(routes);
 
 const server = http.createServer(app)
-const io = socketIO(server//, {
-//     cors: {
-//      origin: "http://localhost:3000",
-//      method: ["GET", "POST", "PATCH", "PUT", "DELETE"],
-//      credentials: true,
-//      allowedHeaders: ["Authorization"]
-//     }
-// }
+const io = socketIO(server, {
+    cors: {
+     origin: "http://localhost:3000",
+     method: ["GET", "POST", "PATCH", "PUT", "DELETE"],
+     credentials: true,
+     allowedHeaders: ["Authorization"]
+    }
+}
 );
 app.set("io", io);
 

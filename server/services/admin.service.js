@@ -2,14 +2,14 @@ const adminSchema = require("../models/admin");
 
 export default class AdminService{
     static async create(admin){
-        return await adminSchema.save(admin)
+        return await adminSchema.create(admin)
     }
 
     static async findAll(){
      return await adminSchema.find()
     }
 
-    static async findOneByemail(email){
-        return adminSchema.findOne({email:email});
+    static async findOneByUsername(username){
+        return adminSchema.findOne({username:username});
     }
 }
