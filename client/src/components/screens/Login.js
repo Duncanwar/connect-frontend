@@ -9,8 +9,7 @@ const history = useHistory();
 const [password,setPassword]= useState("")
 const [email,setEmail]= useState("")
 
-const PostData = ()=>{
-    
+const PostData = ()=>{ 
     if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
     M.toast({html:"invalid email"})
 return 
@@ -31,16 +30,13 @@ fetch(`${process.env.REACT_APP_BACKEND_URL
     .then(data=>{
        if(data.error){
             M.toast({html: data.error, })
-            console.log(process.env.REACT_APP_BACKEND_URL)
         }
         else{
             localStorage.setItem('jwt',data.token)
             localStorage.setItem('user',JSON.stringify(data.user))
             dispatch({type:"USER",payload:data.user})
-           console.log(data)
             M.toast({html: "signin success",})
-            history.push('/')
-            console.log(process.env.REACT_APP_BACKEND_URL)
+            history.push('/')  
         }
       
     }).catch(err=>{

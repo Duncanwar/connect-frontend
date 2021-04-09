@@ -40,6 +40,9 @@ User.findOne({email:email})
         })
         user.save()
         .then(user=>{
+            // const io = req.app.get('io');
+            // console.log(io, user)
+            // io.emit('newUserAdded', user)
             transporter.sendMail({  
                 to: email,
                 from: process.env.EMAIL_SENDER,
@@ -62,7 +65,7 @@ User.findOne({email:email})
 router.post('/signin', (req,res)=>{
     const {email,password,pic}= req.body;
     if(!email || !password){
-    return    res.status(422).json({error:"please add email or password"})
+    return res.status(422).json({error:"please add email or password"})
     }
     User.findOne({email:email})
     .then(savedUser=>{

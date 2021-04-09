@@ -1,7 +1,7 @@
 const express = require('express')
 const router  = express.Router();
-const mongoose = require('mongoose');
 const requiredLogin = require('../middleware/requireLogin');
+const Post = require("../models/post")
 
 import postControllers from '../controllers/post.controller'
 
@@ -14,11 +14,12 @@ router.get('/followingpost',requiredLogin,(req,res)=>{
     .populate("postedBy","_id name")
     .populate("comments.postedBy","_id name")
     .sort("-createdAt")
-    .then(posts=>res.json({posts}))
+    .then(posts=>{
+        res.json({posts})})
     .catch(err=>console.log(err))
 })
 
-router.post('/createpost', createPost)
+router.post('/createpost', requiredLogin, createPost)
 
 router.get("/myposts",requiredLogin ,(req,res)=>{
     Post.find({postedBy:req.user._id})

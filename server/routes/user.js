@@ -1,9 +1,15 @@
 const express = require('express')
 const router  = express.Router();
 const mongoose = require('mongoose');
+const requireLogin = require('../middleware/requireLogin');
 const requiredLogin = require('../middleware/requireLogin');
-const Post = mongoose.model("Post");
-const User = mongoose.model("user")
+const Post = require("../models/post");
+const User = require("../models/user")
+import admin from "../middleware/admin.middleware";
+import userController from "../controllers/user.controller";
+
+const {checkPassword,checkEmail} = admin
+const {deleteUser} = userController
 
 router.get('/user/:id',requiredLogin,(req,res)=>{
 User.findOne({_id:req.params.id})
@@ -79,5 +85,16 @@ User.find({email:{$regex:userPattern}})
     console.log(err)
 })
 })
+
+router.get('/allUsers', requireLogin, (req, res) =>{
+    User.find().then(user=>{
+        console.log(user)
+        res.json({user})
+    }).catch(err=>{
+        console.log(err)
+    })
+})
+
+//router.delete('/user', [checkPassword,checkEmail,requireLogin], deleteUser)
 
 module.exports = router
