@@ -4,12 +4,14 @@ import adminMiddleware from "../middleware/admin.middleware";
 import Admin from "../models/admin"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+import requireLogin from "../middleware/requireLogin";
+
 const router = express.Router();
 
 const {checkPassword,checkUsername} = adminMiddleware
-const {createAdmin, getAll} = AdminController
+const {createAdmin, getAll, deleteUser} = AdminController
 
-router.post('/admin', [checkUsername], createAdmin )
+router.post('/admin', [checkUsername, requireLogin], createAdmin )
 
 router.post('/admin/login',[checkPassword,checkUsername],(req,res)=>{
     const {username,password}= req.body;
@@ -30,5 +32,15 @@ router.post('/admin/login',[checkPassword,checkUsername],(req,res)=>{
 })
     })
 router.get('/admin',[checkPassword,checkUsername],getAll);
+router.get('/allUsers', requireLogin, (req, res) =>{
+    User.find().then(user=>{
+        console.log(user)
+        res.json({user})
+    }).catch(err=>{
+        console.log(err)
+    })
+})
+
+router.delete('/user/:userId', [checkPassword,checkUsername,requireLogin], deleteUser)
 
 module.exports = router;
