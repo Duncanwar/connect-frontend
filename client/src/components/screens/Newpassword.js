@@ -2,7 +2,7 @@ import React,{useState,useContext} from 'react'
 import {useHistory,useParams} from 'react-router-dom'
 import M from 'materialize-css'
 
-const Update = ()=>{
+const Update = () =>{
 
 const history = useHistory();
 const [password,setPassword]= useState("")

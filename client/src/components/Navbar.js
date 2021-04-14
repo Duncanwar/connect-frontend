@@ -14,7 +14,6 @@ M.Modal.init(searchModal.current)
   },[])
   const renderList= ()=>{
     if(state){
-      console.log()
       return[
         <li key="1"><i data-target="modal1" className="alrge material-icons modal-trigger" style={{color:"black"}}>search</i></li>,
       <li key="2"><Link to="/profile">Profile</Link></li>,

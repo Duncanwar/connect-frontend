@@ -42,11 +42,10 @@ const Chat = () => {
 
     useEffect(()=>{
         setConnectedUser(jwt_decode(localStorage.getItem("jwt"))._id)
-        console.log("down")
         const socket = socketIOClient(process.env.REACT_APP_BACKEND_URL)
         
         socket.on("newMessageSended", data =>{
-          console.log("here")
+       
             clickUser(chosenUser)
         })
         
@@ -54,7 +53,6 @@ const Chat = () => {
             axios.get(`${process.env.REACT_APP_BACKEND_URL}/allUsers`,{
                 headers:{"Authorization":"Bearer "+localStorage.getItem("jwt")}
             }).then(response =>{
-              console.log(response)
                 setListUsers(response.data.filter(user => user._id !== connectedUser))
                 clickUser(response.data[0]._id)
             })

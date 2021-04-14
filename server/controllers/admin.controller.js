@@ -17,4 +17,8 @@ export default class AdminController{
         const admins = await findAll()
         return res.status(200).json({admins})
     }
+    static async deleteUser(req,res){
+        const {userId} = req.params
+        
+    }
 }

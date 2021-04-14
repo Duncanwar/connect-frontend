@@ -3,7 +3,7 @@ const router  = express.Router();
 const Chat = require('../models/privateChat')
 const passport = require('passport');
 
-router.post('/sendMessage/:idChat', passport.authenticate('bearer',{session:false}),(req, res)=>{
+router.post('/sendMessage/:idChat', passport.authenticate('Bearer ',{session:false}),(req, res)=>{
 Chat.findById(req.params.idChat, (err,chat)=>{
    if(err){
        res.send(err);
@@ -16,7 +16,7 @@ Chat.findById(req.params.idChat, (err,chat)=>{
 })
 });
 
-router.get("/getPrivateMessage/:idUser1/:idUser2", passport.authenticate('bearer',{session:false}),(req, res)=>{
+router.get("/getPrivateMessage/:idUser1/:idUser2", passport.authenticate('Bearer ',{session:false}),(req, res)=>{
    Chat.findOne({user1:req.params.user1, user2:req.params.idUser2}, (err,chat1)=>{
    if(err){
        res.send(err)
