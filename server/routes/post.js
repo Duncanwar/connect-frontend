@@ -23,7 +23,7 @@ router.post('/createpost', requiredLogin, createPost)
 
 router.get("/myposts",requiredLogin ,(req,res)=>{
     Post.find({postedBy:req.user._id})
-    .populate("PostedBy","_id name")
+    .populate("PostedBy","_id name photo")
     .then(mypost=>{
         res.json({mypost})
     })

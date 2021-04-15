@@ -63,21 +63,21 @@ router.put('/unfollow',requiredLogin,(req,res)=>{
 })
 
 router.put('/updatepic',requiredLogin, (req,res)=>{
-    
     User.findByIdAndUpdate(req.user._id,{
         $set:{photo:req.body.pic}
     },{new:true},(err,result)=>{
         if(err){
             return res.status(422).json({error:"pic cannot be posted"})
         }
-        else
+        else{
         res.json(result)
+    }
     }) 
     })
 
 router.post("/search-users", (req,res) =>{
 let userPattern = new RegExp("^"+req.body.query)
-User.find({email:{$regex:userPattern}})
+User.find({name:{$regex:userPattern}})
 .select("_id email name")
 .then(user=>{
     res.json({user})

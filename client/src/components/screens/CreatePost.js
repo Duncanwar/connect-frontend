@@ -33,7 +33,6 @@ if(url){
     }).catch(err=>{
         console.log(err)
     })
-
 }
 },[url])
 
