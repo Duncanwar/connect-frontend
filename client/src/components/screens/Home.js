@@ -31,7 +31,7 @@ const Home  = ()=>{
           }).then(res=>res.json())
           .then(result=>{
             const newData = data.map(item=>{
-                if(item._id==result._id){
+                if(item._id===result._id){
                     return result
                 }else{
                     return item
@@ -56,7 +56,7 @@ const Home  = ()=>{
           .then(result=>{
            
             const newData = data.map(item=>{
-                if(item._id==result._id){
+                if(item._id===result._id){
                     return result
                 }else{
                     return item
@@ -82,7 +82,7 @@ const Home  = ()=>{
           }).then(res=>res.json())
           .then(result=>{
                  const newData = data.map(item=>{
-                if(item._id==result._id){
+                if(item._id===result._id){
                     return result
                 }else{
                     return item
@@ -121,11 +121,14 @@ const Home  = ()=>{
                             onClick={()=>deletePost(item._id)}
                             >delete</i>
                             }</h5>
-                            <div className="card-image">
+                            <div className="center">
+                               <h6>{item.title}</h6>
+                                <p>{item.body}</p>
+                                </div>
+                            <div className="card-image shadow-lg card">
                                 <img src={item.photo}/>
                             </div>
-                            <div className="card-content">
-                            <i className="material-icons" style={{color:"red"}}>favorite</i>
+                            <div className="card-content shadow-lg">
                             {item.likes.includes(state._id)
                             ? 
                              <i className="material-icons"
@@ -136,9 +139,7 @@ const Home  = ()=>{
                             onClick={()=>{likePost(item._id)}}
                             >thumb_up</i>
                             }
-                              <h6>{item.likes.length} likes</h6>
-                                <h6>{item.title}</h6>
-                                <p>{item.body}</p>
+                              <h6>{item.likes.length} likes</h6>  
                                 {
                                     item.comments.map(record=>{
                                         return(

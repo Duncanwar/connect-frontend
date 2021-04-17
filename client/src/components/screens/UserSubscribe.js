@@ -1,7 +1,6 @@
 import React,{useState,useEffect, useContext} from 'react'
 import {UserContext} from '../../App'
 import { Link } from 'react-router-dom'
-import axios from 'axios';
 
 const UserSubscribe = ()=>{
     const url = process.env.REACT_APP_BACKEND_URL
@@ -35,7 +34,7 @@ const UserSubscribe = ()=>{
         }).then(res=>res.json())
         .then(result=>{
             const newData = data.map(item=>{
-                if(item._id==result._id){
+                if(item._id===result._id){
                     return result
                 }
                 else{
@@ -62,7 +61,7 @@ const UserSubscribe = ()=>{
         }).then(res=>res.json())
         .then(result=>{
             const newData = data.map(item=>{
-                if(item._id==result._id){
+                if(item._id===result._id){
                     return result
                 }
                 else{
@@ -88,7 +87,7 @@ const UserSubscribe = ()=>{
         }).then(res=>res.json())
         .then(result=>{
             const newData = data.map(item=>{
-                if(item._id==result._id){
+                if(item._id===result._id){
                     return result
                 }else
                 return item
