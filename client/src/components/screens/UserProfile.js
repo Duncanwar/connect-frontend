@@ -1,14 +1,14 @@
 import React,{useEffect,useState,useContext} from 'react'
 import {UserContext} from '../../App'
 import {useParams} from 'react-router-dom'
+import { Button } from 'react-bootstrap';
 
 const Profile = ()=>{
     const url = process.env.REACT_APP_BACKEND_URL
     const [userProfile,setProfile]= useState(null)
     const {userid} = useParams()
     const {state,dispatch} = useContext(UserContext)
-   const [showFollow,setFollow] = useState(state ? !state.following.includes(userid): true)
-   
+    const [showFollow,setFollow] = useState(state ? !state.following.includes(userid): true)
     useEffect(()=>{
         fetch(`${url}/user/${userid}`,{
             headers:{
@@ -70,10 +70,10 @@ const Profile = ()=>{
            setFollow(true)
         })
     }
+
     return (
         <>
-        {userProfile ?  
-        
+        {userProfile ?   
 <div style={{maxWidth:"550px",margin:"0px auto"}}>
            <div style={{
                display:"flex",
@@ -89,12 +89,11 @@ const Profile = ()=>{
         <h4>{userProfile.user.name}</h4>
         <h4>{userProfile.user.email}</h4>
                <div style={{display:"flex",
-                justifyContent:"space-between", width:"108%"}}>
+                justifyContent:"space-between", width:"118%"}}>
                    <h5>{userProfile.post.length} posts</h5>
         <h5 onClick={()=>viewfollow(userProfile.user._id)}>{userProfile.user.followers.length} followers</h5>
         <h5>{userProfile.user.following.length}following</h5>
-        {showFollow? <button onClick={()=>viewfollow()}>follow</button> :  <button onClick={()=>unviewfollow()}>unfollow</button>}
-       
+        {showFollow? <Button onClick={()=>viewfollow()}>follow</Button> :  <Button onClick={()=>unviewfollow()}>unfollow</Button>}
                </div>
            </div>
            </div>
@@ -107,12 +106,9 @@ const Profile = ()=>{
                })
            }
        </div>
-       
        </div>
-
         :<h2>loading...!</h2>
-        }
-       
+        }    
     </>)
 }
 export default Profile

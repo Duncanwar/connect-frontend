@@ -8,7 +8,10 @@ const Profile = () => {
   const [mypics, setPics] = useState([]);
   const { state, dispatch } = useContext(UserContext);
   const [image, setImage] = useState("");
+  const [previewSrc, setPreviewSrc] = useState('')
   const [data, setData] = useState([])
+  const [isPreviewAvailable, setIsPreviewAvailable] = useState(false)
+  const [isPicUpdated, setIsPicUpdated] = useState(false)
   const location =  useLocation()
   useEffect(() => {
     fetch(`${url}/myposts`, {
@@ -21,7 +24,7 @@ const Profile = () => {
         setPics(result.mypost);
         setData(state)
       });
-  }, []);
+  }, [isPicUpdated]);
 
   useEffect(() => {
     if (image) {
@@ -52,12 +55,13 @@ const Profile = () => {
                 JSON.stringify({ ...state, photo: result.photo })
               );
               dispatch({ type: "UPDATEPIC", payload: result.photo });
-             window.location.reload(false)
+              setIsPicUpdated(true)
+          //   window.location.reload(false)
             });      
         })
         .catch((err) => console.log(err));
     }
-  }, [image,location.key]);
+  }, [image]);
 
   const changePhoto = (file) => {
     setImage(file);
