@@ -1,7 +1,8 @@
 import React,{useState,useEffect,useContext} from 'react'
 import {UserContext} from '../../App'
 import {Link} from 'react-router-dom'
-import {Card} from "primereact/card"
+import {Card} from "react-bootstrap"
+import {Bookmark} from "react-bootstrap-icons"
 
 const Home  = ()=>{
     const url = process.env.REACT_APP_BACKEND_URL
@@ -54,9 +55,9 @@ const Home  = ()=>{
               })
           }).then(res=>res.json())
           .then(result=>{
-           
             const newData = data.map(item=>{
                 if(item._id===result._id){
+                    console.log(result)
                     return result
                 }else{
                     return item
@@ -79,7 +80,7 @@ const Home  = ()=>{
                   postId,
                   text
               })
-          }).then(res=>res.json())
+         }).then(res=>res.json())
           .then(result=>{
                  const newData = data.map(item=>{
                 if(item._id===result._id){
@@ -108,13 +109,23 @@ const Home  = ()=>{
             setData(newData)
         })
     }
+const bookMark = ()=>{
+return(
+    <h2 style={{color:"black"}}>Bookmark
+
+        {console.log("Here")}
+    </h2>
+)
+}
    return (
        <Card>
            {
                data.map(item=>{
                    return(
                        <div className="card home-card" key={item._id}>
-                            <h5 style={{padding:"5px"}}><Link to={item.postedBy._id !== state._id?"/profile/"+item.postedBy._id :"/profile"  }>{item.postedBy.name}</Link> {item.postedBy._id == state._id 
+                            <h5 style={{padding:"5px"}}>
+                                <Bookmark onClick={()=>bookMark()} />
+                                <Link to={item.postedBy._id !== state._id?"/profile/"+item.postedBy._id :"/profile"  }>{item.postedBy.name}</Link> {item.postedBy._id == state._id 
                             && <i className="material-icons" style={{
                                 float:"right"
                             }} 

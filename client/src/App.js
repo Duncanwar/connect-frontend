@@ -49,9 +49,9 @@ if(user){
       <Route path="/profile/:userid">
         <UserProfile />
       </Route>
-      <Route path="/followingpost">
+      {/* <Route path="/followingpost">
         <UserSubscribe />
-      </Route>
+      </Route> */}
       <Route exact path="/reset">
         <Reset />
       </Route>

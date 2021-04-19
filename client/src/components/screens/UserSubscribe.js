@@ -7,7 +7,6 @@ const UserSubscribe = ()=>{
     const [data,setData] = useState([])
     const {state,dispatch}= useContext(UserContext)
     useEffect(()=>{
- //       const data = await axios.get()
         fetch(`${process.env.REACT_APP_BACKEND_URL}/followingpost`,{
             headers:{
                 "Authorization":"Bearer "+localStorage.getItem("jwt")
@@ -16,8 +15,7 @@ const UserSubscribe = ()=>{
             res.json()
             })
         .then(result =>{
-        //     console.log(result)
-        //    setData(result)
+           setData(result)
         })
     },[])
 
@@ -44,9 +42,7 @@ const UserSubscribe = ()=>{
             setData(newData)
         }).catch(err=>{
             console.log(err)
-        })
-
-        
+        })        
     }
     const unlikePost =(id)=>{
         fetch(`${url}/unlike`,{
@@ -125,17 +121,12 @@ const UserSubscribe = ()=>{
                 <div className="card-image">
                     <img src={item.photo} alt=''/>
                     </div>
-                    <div className="card-content">
-                
-                        
+                    <div className="card-content">                 
   <i className="material-icons" style={{color:"red"}}>favorite</i>
         {item.likes.includes(state._id) ? 
                 <i className="material-icons" onClick={()=>unlikePost(item._id)}>thumb_down</i>   
 :         <i className="material-icons" onClick={()=>likePost(item._id)}>thumb_up</i>   
-
-
-        }
-        
+        }    
                     <h6>{item.likes.length} likes</h6>
     <h6>{item.title}</h6>
     <p>{item.body}</p>
@@ -149,8 +140,7 @@ const UserSubscribe = ()=>{
     <form onSubmit={(e)=>{
         e.preventDefault()
         makeComment(e.target[0].value,item._id)
-    }}>
-                    
+    }}>               
                         <input type="text" placeholder="add comment" />
                         </form>
                 </div>
@@ -158,8 +148,7 @@ const UserSubscribe = ()=>{
             </div>
                     )
                 })
-            }
-            
+            }   
         </div>
     )
 }
