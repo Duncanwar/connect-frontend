@@ -66,7 +66,6 @@ const Profile = () => {
   const changePhoto = (file) => {
     setImage(file);
   };
-
   return (
     <div style={{ maxWidth: "550px", margin: "0px auto" }}>
       <div
@@ -81,9 +80,7 @@ const Profile = () => {
             justifyContent: "space-around",
           }}
         >
-             {console.log(data)}
           <div>
-            {console.log(state)}
             <img
               style={{ width: "160px", height: "160px", borderRadius: "80px" }}
               src={state ? state.photo : "loading..."}
