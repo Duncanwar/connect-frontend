@@ -18,7 +18,7 @@ M.Modal.init(searchModal.current)
         <li key="1"><i data-target="modal1" className="alrge material-icons modal-trigger" style={{color:"black"}}>search</i></li>,
       <li key="2"><Link to="/profile">Profile</Link></li>,
             <li key="3"><Link to="/createpost">CreatePost</Link></li>,
-            <li key="4"><Link to="/followingpost">Following Post</Link></li>,
+            <li key="4"><Link to="/bookmark">Following Post</Link></li>,
             <li key="5"><button 
             className="btn waves-effect waves-light #64b5f6 blue lighten-2" onClick={()=>{
               localStorage.clear()

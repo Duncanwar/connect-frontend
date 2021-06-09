@@ -13,6 +13,7 @@ import UserSubscribe from './components/screens/UserSubscribe'
 import Reset from "./components/screens/Reset"
 import NewPassword from "./components/screens/Newpassword";
 import Chat from "./components/screens/Chat"
+import BookMark from './components/screens/BookMark';
 
 export const UserContext = createContext()
 
@@ -49,9 +50,9 @@ if(user){
       <Route path="/profile/:userid">
         <UserProfile />
       </Route>
-      {/* <Route path="/followingpost">
-        <UserSubscribe />
-      </Route> */}
+      <Route path="/bookMark">
+        <BookMark />
+      </Route>
       <Route exact path="/reset">
         <Reset />
       </Route>
