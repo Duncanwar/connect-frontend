@@ -43,12 +43,12 @@ User.findOne({email:email})
             // const io = req.app.get('io');
             // console.log(io, user)
             // io.emit('newUserAdded', user)
-            transporter.sendMail({  
-                to: email,
-                from: process.env.EMAIL_SENDER,
-                subject: "Signup",
-                html: "<h1>Welcome to instagram </h1>"
-            })
+            // transporter.sendMail({  
+            //     to: email,
+            //     from: process.env.EMAIL_SENDER,
+            //     subject: "Signup",
+            //     html: "<h1>Welcome to instagram </h1>"
+            // })
             res.json({message:"saved successfully"})
         })
         .catch(err=>{

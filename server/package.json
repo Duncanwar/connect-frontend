@@ -4,7 +4,7 @@
   "description": "Full stack Mern using udemy course",
   "main": "app.js",
   "engines": {
-    "node": "12.20.2",
+    "node": "14.x",
     "npm": "6.14.4"
   },
   "scripts": {
@@ -25,9 +25,11 @@
   "homepage": "https://github.com/Duncanwar/Insta-clone#readme",
   "dependencies": {
     "@babel/cli": "^7.13.14",
+    "@babel/core": "^7.14.6",
     "@babel/node": "^7.13.13",
     "@babel/preset-env": "^7.13.12",
     "@babel/register": "^7.13.14",
+    "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",

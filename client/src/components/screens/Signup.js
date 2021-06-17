@@ -38,11 +38,16 @@ const uploadFields= async ()=>{
         return 
            }
         console.log("here",{name,email,password})
-const data = await axios.post(`${process.env.REACT_APP_BACKEND_URL}
-/signup`,{name,
-    password,
-    email})
-console.log(data.data)
+        try{
+            const data = await axios.post(`${process.env.REACT_APP_BACKEND_URL}
+            /signup`,{name,
+                password,
+                email})
+            console.log(data.data)
+        }catch(error){
+            console.log(error)
+        }
+
         //     fetch(`${process.env.REACT_APP_BACKEND_URL}
         //     /signup`,{
         // method:"post",

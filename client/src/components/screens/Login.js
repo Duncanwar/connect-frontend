@@ -29,7 +29,7 @@ fetch(`${process.env.REACT_APP_BACKEND_URL
     }).then(res=>res.json())
     .then(data=>{
        if(data.error){
-            M.toast({html: data.error, })
+            M.toast({html: data.error })
         }
         else{
             localStorage.setItem('jwt',data.token)
@@ -40,6 +40,7 @@ fetch(`${process.env.REACT_APP_BACKEND_URL
         }
       
     }).catch(err=>{
+        console.log(process.env.REACT_APP_BACKEND_URL)
         console.log(err)
     })
 }
