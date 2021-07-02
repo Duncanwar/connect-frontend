@@ -1,4 +1,4 @@
-import BookmarkService from "../services/bookmark.service"
+import BookmarkService from "../server/services/bookmark.service"
 
 export default class BookmarkController {
     static async add(req, res){

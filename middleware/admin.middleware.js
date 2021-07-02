@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import adminService from "../services/admin.service"
+import adminService from "../server/services/admin.service"
 
 dotenv.config();
 const {findOneByUsername} = adminService

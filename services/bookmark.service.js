@@ -1,4 +1,4 @@
-const BookmarkSchema = require('../models/bookmark');
+const BookmarkSchema = require('../../models/bookmark');
 
 export default class PostService{
     static async create(post){

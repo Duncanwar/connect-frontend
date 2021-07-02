@@ -1,4 +1,4 @@
-const adminSchema = require("../models/admin");
+const adminSchema = require("../../models/admin");
 
 export default class AdminService{
     static async create(admin){
