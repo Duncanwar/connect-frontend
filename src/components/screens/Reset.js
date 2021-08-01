@@ -43,7 +43,7 @@ const Reset = () => {
   return (
     <div className="mycard">
       <div className="card auth-card input-field">
-        <h2>connect</h2>
+        <h2>Connect</h2>
         <input
           type="text"
           placeholder="email"
