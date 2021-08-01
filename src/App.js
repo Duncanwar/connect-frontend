@@ -63,7 +63,7 @@ const Routing = () => {
           <Chat />
         </Route>
       </Switch>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };
