@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import M from 'materialize-css'
 import {useHistory} from 'react-router-dom'
+import axios from 'axios'
 
 const CreatePost=()=>{
   const history = useHistory()
@@ -36,19 +37,18 @@ if(url){
 }
 },[url])
 
-  const postDetails =()=>{
-    const data = new FormData();
-    data.append("file",image)
-    data.append("upload_preset","insta-clone")
-    data.append("cloud_name","semugeshi")
-    fetch(process.env.REACT_APP_CLOUDINARY_API,{
-      method:'post',
-      body:data
-    }).then(res=>res.json())
-    .then(data=>{
+  const postDetails = async ()=>{
+    const dataImg = new FormData();
+    dataImg.append("file",image)
+    dataImg.append("upload_preset","insta-clone")
+    dataImg.append("cloud_name","semugeshi")
+    const {data} = await axios.post(process.env.REACT_APP_CLOUDINARY_API,dataImg)
+      // .then(res => res.json())
+      // .then(data => {
+      console.log(data.url)
       setUrl(data.url)
-    })
-    .catch(err=>console.log(err))
+    // })
+    // .catch(err=>console.log(err))
     
   }
     return(

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import M from "materialize-css";
 import axios from "axios";
+import { register } from "../../services/userService";
 
 const SignUp = () => {
   const history = useHistory();
@@ -41,42 +42,14 @@ const SignUp = () => {
       M.toast({ html: "invalid email" });
       return;
     }
-    // try {
-    //   console.log(process.env.REACT_APP_BACKEND_URL);
-    //   const data = await axios.post(
-    //     `${process.env.REACT_APP_BACKEND_URL}/signup`,
-    //     { name, password, email }
-    //   );
-    //   M.toast({ html: data.error });
-    //   console.log(data.data);
-    // } catch (error) {
-    //   console.log(error);
-    // }
-
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/signup`, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("jwt"),
-      },
-      body: JSON.stringify({
-        name,
-        password,
-        email,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.error) {
-          M.toast({ html: data.error });
-        } else {
-          M.toast({ html: data.message });
-          history.push("/signin");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    try {
+      const { data } = await register({ name, password, email });
+      M.toast({ html: data.message });
+      history.push("/signin");
+    } catch (error) {
+      console.log(error.response);
+      M.toast({ html: error.response.data.error });
+    }
   };
 
   return (
