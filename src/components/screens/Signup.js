@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import M from "materialize-css";
-import axios from "axios";
 import { register } from "../../services/userService";
 
 const SignUp = () => {
@@ -9,29 +8,6 @@ const SignUp = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [image, setImage] = useState("");
-  const [url, setUrl] = useState(undefined);
-
-  // useEffect(()=>{
-  // if(url){
-  //     uploadFields()
-  // }
-  // },[url])
-
-  // const postPic=()=>{
-
-  // const data = new FormData()
-  // data.append("file",image)
-  // data.append("upload_preset", "insta-clone")
-  // data.append("cloud_name", "semugeshi")
-  // fetch("https://api.cloudinary.com/v1_1/semugeshi/image/upload",{
-  //     method:"post",
-  //     body:data
-  // }).then(res=>res.json())
-  // .then(data=>setUrl(data.url))
-  // .catch(err=>
-  //     console.log(err))
-  // }
 
   const uploadFields = async () => {
     if (
@@ -75,17 +51,6 @@ const SignUp = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        {/* <div className="file-field input-field">
-      <div className="btn">
-        <span>Upload profile</span>
-        <input type="file"
-        onChange={(e)=>setImage(URL.createObjectURL(e.target.files[0]),)}
-        />
-      </div>
-      <div className="responsive-img">
-        <img className="responsive-img" src={image}/>
-      </div>
-    </div> */}
         <button
           className="btn waves-effect waves-light #64b5f6 blue lighten-2"
           onClick={() => uploadFields()}
