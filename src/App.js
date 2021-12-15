@@ -9,12 +9,8 @@ import Profile from "./components/screens/Profile";
 import CreatePost from "./components/screens/CreatePost";
 import { reducer, initialState } from "./reducers/userReducer";
 import UserProfile from "./components/screens/UserProfile";
-import UserSubscribe from "./components/screens/UserSubscribe";
 import Reset from "./components/screens/Reset";
 import NewPassword from "./components/screens/Newpassword";
-import Chat from "./components/screens/Chat";
-import Footer from "./components/Footer";
-// import BookMark from './components/screens/BookMark';
 
 export const UserContext = createContext();
 
@@ -52,33 +48,17 @@ const Routing = () => {
         <Route path="/profile/:userid">
           <UserProfile />
         </Route>
-        <Route path="/bookMark">{/* <BookMark /> */}</Route>
         <Route exact path="/reset">
           <Reset />
         </Route>
         <Route path="/reset/:token">
           <NewPassword />
         </Route>
-        <Route path="/chat">
-          <Chat />
-        </Route>
       </Switch>
-      {/* <Footer /> */}
     </>
   );
 };
 
-const Admin = () => {
-  return (
-    <Switch>
-      <Route>
-        {/* <AppShell path="/dashboard">
-          <Dashboard />
-        </AppShell> */}
-      </Route>
-    </Switch>
-  );
-};
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   return (

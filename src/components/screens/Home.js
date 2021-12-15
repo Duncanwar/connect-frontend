@@ -156,7 +156,6 @@ const Home = () => {
           return (
             <div className="card home-card" key={item._id}>
               <h5 style={{ padding: "5px" }}>
-                {/* <Bookmark onClick={()=>bookMark()} /> */}
                 <Link
                   to={
                     item.postedBy._id !== state._id

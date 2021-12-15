@@ -3,16 +3,12 @@ import { UserContext } from "../../App";
 import {useHistory, useLocation} from "react-router-dom"
 
 const Profile = () => {
-  const history = useHistory()
   const url = process.env.REACT_APP_BACKEND_URL;
   const [mypics, setPics] = useState([]);
   const { state, dispatch } = useContext(UserContext);
   const [image, setImage] = useState("");
-  const [previewSrc, setPreviewSrc] = useState('')
   const [data, setData] = useState([])
-  const [isPreviewAvailable, setIsPreviewAvailable] = useState(false)
   const [isPicUpdated, setIsPicUpdated] = useState(false)
-  const location =  useLocation()
   useEffect(() => {
     fetch(`${url}/myposts`, {
       headers: {
@@ -56,7 +52,7 @@ const Profile = () => {
               );
               dispatch({ type: "UPDATEPIC", payload: result.photo });
               setIsPicUpdated(true)
-          //   window.location.reload(false)
+            window.location.reload(false)
             });      
         })
         .catch((err) => console.log(err));
@@ -111,7 +107,6 @@ const Profile = () => {
                 changePhoto(e.target.files[0])
               }
             />
-            {/* <img style={{width:"160px", height:"160px", borderRadius:"80px"}} src={image} /> */}
           </div>
           <div className="file-path-wrapper">
             <input className="file-path validate" type="text" />
