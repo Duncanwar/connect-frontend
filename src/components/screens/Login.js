@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { UserContext } from "../../App";
 import { Link, useHistory } from "react-router-dom";
-import auth from "../../services/authService"
+import auth from "../../services/authService";
 import M from "materialize-css";
 
 const Login = () => {
@@ -10,7 +10,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
-  const PostData = async () => {
+  const PostData = () => {
     if (
       !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
         email
@@ -19,8 +19,8 @@ const Login = () => {
       M.toast({ html: "invalid email" });
       return;
     }
-    // const { data } = await auth.login(email, password )
-    // console.log(data)
+    // const { data } = await auth.login(email, password);
+    // console.log(data);
     fetch(`${process.env.REACT_APP_BACKEND_URL}/signin`, {
       method: "post",
       headers: {
