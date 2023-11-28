@@ -151,6 +151,8 @@ const Home = () => {
   const { posts: all, totalCount } = getPagedData();
   return (
     <>
+    {all?<div>Loading ...</div>:
+   <>
       <Card>
         {all.map((item) => {
           return (
@@ -234,6 +236,8 @@ const Home = () => {
         currentPage={currentPage}
         onPageChange={(currentPage) => handlePageChange(currentPage)}
       />
+      </>
+}
     </>
   );
 };
