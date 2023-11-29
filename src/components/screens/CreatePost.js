@@ -43,7 +43,7 @@ if(url){
     data.append("file",image)
     data.append("upload_preset","insta-clone")
     data.append("cloud_name","semugeshi")
-    // const url = await axios.post(process.env.REACT_APP_CLOUDINARY_API,data)
+
     fetch(process.env.REACT_APP_CLOUDINARY_API, {
       method: "post",
       body: data,

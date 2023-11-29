@@ -50,15 +50,18 @@ const Login = () => {
   };
 
   return (
-    <div className="mycard">
-      <div className="card auth-card input-field">
-        <h2>Connect</h2>
+    <div className="flex min-h-full flex-1 flex-cool justify-center px-6 py-12 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+      <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+      <Link to="/signup">You don't have an account ?</Link>
+      </h2>
+      </div>
         <input
           type="text"
           placeholder="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-        />
+          />
         <input
           type="password"
           placeholder="password"
@@ -78,7 +81,6 @@ const Login = () => {
         <h6>
           <Link to="/reset">Forgot Password </Link>
         </h6>
-      </div>
     </div>
   );
 };

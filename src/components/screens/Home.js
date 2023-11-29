@@ -151,7 +151,8 @@ const Home = () => {
   const { posts: all, totalCount } = getPagedData();
   return (
     <>
-    {all?<div>Loading ...</div>:
+    {console.log(all.length)}
+    {all.length==0?<div>Loading ...</div>:
    <>
       <Card>
         {all.map((item) => {
