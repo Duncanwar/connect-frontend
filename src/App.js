@@ -29,7 +29,7 @@ const Routing = () => {
 
   return (
     <>
-      <Switch>
+      {/* <Switch>
         <Route exact path="/">
           <Home />
         </Route>
@@ -54,7 +54,10 @@ const Routing = () => {
         <Route path="/reset/:token">
           <NewPassword />
         </Route>
-      </Switch>
+      </Switch> */}
+      <h1 className="text-xl font-bold underline text-orange-700 bg-blue-500">
+      Hello world!
+    </h1>
     </>
   );
 };
