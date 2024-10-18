@@ -2,10 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../App";
 import { Link } from "react-router-dom";
 import { Card } from "react-bootstrap";
-import { Bookmark } from "react-bootstrap-icons";
-import { getPosts, like } from "../../services/postService";
-import { paginate } from "../../utils/paginate";
-import Pagination from "../common/pagination";
 import axios from "axios";
 import M from "materialize-css";
 
@@ -13,8 +9,6 @@ export default function Home() {
   const url = process.env.REACT_APP_BACKEND_URL;
   const [posts, setPosts] = useState([]);
   const { state, dispatch } = useContext(UserContext);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(4);
 
   useEffect(() => {
     getAllPosts();
@@ -30,13 +24,6 @@ export default function Home() {
   };
 
   const likePost = async (id) => {
-    // const { data } = await like(id, {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: "Bearer " + localStorage.getItem("jwt"),
-    //   },
-    // });
-    // console.log(data);
     fetch(`${url}/posts/like`, {
       method: "put",
       headers: {
@@ -90,7 +77,7 @@ export default function Home() {
   };
 
   const makeComment = (text, postId) => {
-    fetch(`${url}/comment`, {
+    fetch(`${url}/posts/comment`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -132,26 +119,6 @@ export default function Home() {
         setPosts(newData);
       });
   };
-  const bookMark = () => {
-    return (
-      <h2 style={{ color: "black" }}>
-        Bookmark
-        {console.log("Here")}
-      </h2>
-    );
-  };
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-  const getPagedData = async () => {
-    // const fil = data;
-    const { data } = await axios.get(`${url}/posts`);
-    // totalCount: fil.length
-    // console.log(data.data);
-    return { posts: data.data };
-  };
-  // const { posts: data, totalCount } = getPagedData();
 
   return (
     <>
@@ -159,7 +126,7 @@ export default function Home() {
         <div>Loading ...</div>
       ) : (
         <Card>
-          {posts?.map((item) => (
+          {posts.map((item) => (
             <div className="card home-card" key={item._id}>
               <h5 style={{ padding: "5px" }}>
                 <Link
