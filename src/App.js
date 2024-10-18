@@ -55,6 +55,7 @@ const Routing = () => {
           <NewPassword />
         </Route>
       </Switch>
+
     </>
   );
 };

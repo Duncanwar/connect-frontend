@@ -1,26 +1,32 @@
 import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "../../App";
-import {useHistory, useLocation} from "react-router-dom"
+import axios from "axios";
 
-const Profile = () => {
+function Profile() {
   const url = process.env.REACT_APP_BACKEND_URL;
   const [mypics, setPics] = useState([]);
   const { state, dispatch } = useContext(UserContext);
   const [image, setImage] = useState("");
-  const [data, setData] = useState([])
-  const [isPicUpdated, setIsPicUpdated] = useState(false)
+  const [data, setData] = useState([]);
+  const [isPicUpdated, setIsPicUpdated] = useState(false);
+
   useEffect(() => {
-    fetch(`${url}/myposts`, {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("jwt"),
-      },
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        setPics(result.mypost);
-        setData(state)
-      });
+    getAllPics();
   }, [isPicUpdated]);
+
+  const getAllPics = async () => {
+    try {
+      const result = await axios.get(`${url}/posts/myposts`, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+      });
+      setPics(result.data.data);
+      setData(state);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     if (image) {
@@ -34,7 +40,7 @@ const Profile = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          fetch(`${url}/updatepic`, {
+          fetch(`${url}/posts/updatepic`, {
             method: "put",
             headers: {
               "Content-Type": "application/json",
@@ -51,9 +57,9 @@ const Profile = () => {
                 JSON.stringify({ ...state, photo: result.photo })
               );
               dispatch({ type: "UPDATEPIC", payload: result.photo });
-              setIsPicUpdated(true)
-            window.location.reload(false)
-            });      
+              setIsPicUpdated(true);
+              window.location.reload(false);
+            });
         })
         .catch((err) => console.log(err));
     }
@@ -62,6 +68,7 @@ const Profile = () => {
   const changePhoto = (file) => {
     setImage(file);
   };
+
   return (
     <div style={{ maxWidth: "550px", margin: "0px auto" }}>
       <div
@@ -103,9 +110,7 @@ const Profile = () => {
             <input
               type="file"
               title=""
-              onChange={(e) =>
-                changePhoto(e.target.files[0])
-              }
+              onChange={(e) => changePhoto(e.target.files[0])}
             />
           </div>
           <div className="file-path-wrapper">
@@ -127,5 +132,5 @@ const Profile = () => {
       </div>
     </div>
   );
-};
+}
 export default Profile;
