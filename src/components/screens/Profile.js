@@ -1,72 +1,89 @@
 import React, { useEffect, useState, useContext } from "react";
-import { UserContext } from "../../App";
 import axios from "axios";
+
+import { UserContext } from "../../App";
 
 function Profile() {
   const url = process.env.REACT_APP_BACKEND_URL;
-  const [mypics, setPics] = useState([]);
   const { state, dispatch } = useContext(UserContext);
-  const [image, setImage] = useState("");
-  const [data, setData] = useState([]);
-  const [isPicUpdated, setIsPicUpdated] = useState(false);
+  const [profileData, setProfileData] = useState({
+    mypics: [],
+    image: "",
+    isPicUpdated: false,
+  });
 
   useEffect(() => {
+    const getAllPics = async () => {
+      try {
+        const result = await axios.get(`${url}/posts/myposts`, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("jwt"),
+          },
+        });
+        setProfileData((prevData) => ({
+          ...prevData,
+          mypics: result.data.data,
+        }));
+      } catch (error) {
+        console.error(error);
+      }
+    };
     getAllPics();
-  }, [isPicUpdated]);
-
-  const getAllPics = async () => {
-    try {
-      const result = await axios.get(`${url}/posts/myposts`, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("jwt"),
-        },
-      });
-      setPics(result.data.data);
-      setData(state);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  }, [profileData.isPicUpdated, url]);
 
   useEffect(() => {
-    if (image) {
-      const data = new FormData();
-      data.append("file", image);
-      data.append("upload_preset", "insta-clone");
-      data.append("cloud_name", "semugeshi");
-      fetch(process.env.REACT_APP_CLOUDINARY_API, {
-        method: "post",
-        body: data,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          fetch(`${url}/posts/updatepic`, {
-            method: "put",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + localStorage.getItem("jwt"),
+    const uploadImage = async () => {
+      // if (!profileData.image) return;
+      try {
+        const formData = new FormData();
+        // formData.append("file", profileData.image);
+        // formData.append("upload_preset", "insta-clone");
+        // formData.append("cloud_name", "semugeshi");
+
+        // const cloudinaryResponse = await fetch(
+        //   process.env.REACT_APP_CLOUDINARY_API,
+        //   {
+        //     method: "post",
+        //     body: formData,
+        //   }
+        // );
+
+        // const cloudinaryData = await cloudinaryResponse.json();
+        const url =
+          "https://gratisography.com/wp-content/uploads/2024/03/gratisography-funflower-800x525.jpg";
+        if (url) {
+          console.log("passed if");
+
+          const result = await axios.put(
+            `${url}/users/updatepic`,
+            {
+              pic: "https://gratisography.com/wp-content/uploads/2024/03/gratisography-funflower-800x525.jpg",
             },
-            body: JSON.stringify({
-              pic: data.url,
-            }),
-          })
-            .then((res) => res.json())
-            .then((result) => {
-              localStorage.setItem(
-                "user",
-                JSON.stringify({ ...state, photo: result.photo })
-              );
-              dispatch({ type: "UPDATEPIC", payload: result.photo });
-              setIsPicUpdated(true);
-              window.location.reload(false);
-            });
-        })
-        .catch((err) => console.log(err));
-    }
-  }, [image]);
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("jwt"),
+              },
+            }
+          );
+          // const result = await updateResponse.json();
+          console.log(result);
+          localStorage.setItem(
+            "user",
+            JSON.stringify({ ...state, photo: result.photo })
+          );
+          dispatch({ type: "UPDATEPIC", payload: result.photo });
+          setProfileData((prevData) => ({ ...prevData, isPicUpdated: true }));
+        }
+      } catch (error) {
+        console.error("Image upload error", error);
+      }
+    };
+    uploadImage();
+  }, [profileData.image, url, state, dispatch]);
 
   const changePhoto = (file) => {
-    setImage(file);
+    setProfileData((prevData) => ({ ...prevData, image: file }));
   };
 
   return (
@@ -98,7 +115,7 @@ function Profile() {
                 width: "108%",
               }}
             >
-              <h5>{mypics.length} posts</h5>
+              <h5>{profileData.mypics.length} posts</h5>
               <h5>{state ? state.followers.length : "0"} followers</h5>
               <h5>{state ? state.following.length : "0"} following</h5>
             </div>
@@ -109,7 +126,7 @@ function Profile() {
             <span>Upload profile</span>
             <input
               type="file"
-              title=""
+              title="profile"
               onChange={(e) => changePhoto(e.target.files[0])}
             />
           </div>
@@ -119,7 +136,7 @@ function Profile() {
         </div>
       </div>
       <div className="gallery">
-        {mypics.map((item) => {
+        {profileData.mypics.map((item) => {
           return (
             <img
               key={item._id}
