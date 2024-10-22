@@ -21,7 +21,7 @@ const Login = () => {
     }
     // const { data } = await auth.login(email, password);
     // console.log(data);
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/login`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/auth/login`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
