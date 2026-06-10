@@ -8,7 +8,7 @@ import M from "materialize-css";
 export default function Home() {
   const url = process.env.REACT_APP_BACKEND_URL;
   const [posts, setPosts] = useState([]);
-  const { state, dispatch } = useContext(UserContext);
+  const { state } = useContext(UserContext);
 
   useEffect(() => {
     getAllPosts();
@@ -30,18 +30,12 @@ export default function Home() {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
-      body: JSON.stringify({
-        postId: id,
-      }),
+      body: JSON.stringify({ postId: id }),
     })
       .then((res) => res.json())
       .then((result) => {
         const newData = posts.map((item) => {
-          if (item._id === result._id) {
-            return result;
-          } else {
-            return item;
-          }
+          return item._id === result._id ? result : item;
         });
         setPosts(newData);
       })
@@ -49,6 +43,7 @@ export default function Home() {
         console.log(err);
       });
   };
+
   const unlikePost = (id) => {
     fetch(`${url}/posts/unlike`, {
       method: "put",
@@ -56,18 +51,12 @@ export default function Home() {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
-      body: JSON.stringify({
-        postId: id,
-      }),
+      body: JSON.stringify({ postId: id }),
     })
       .then((res) => res.json())
       .then((result) => {
         const newData = posts.map((item) => {
-          if (item._id === result._id) {
-            return result;
-          } else {
-            return item;
-          }
+          return item._id === result._id ? result : item;
         });
         setPosts(newData);
       })
@@ -83,19 +72,12 @@ export default function Home() {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
-      body: JSON.stringify({
-        postId,
-        text,
-      }),
+      body: JSON.stringify({ postId, text }),
     })
       .then((res) => res.json())
       .then((result) => {
         const newData = posts.map((item) => {
-          if (item._id === result._id) {
-            return result;
-          } else {
-            return item;
-          }
+          return item._id === result._id ? result : item;
         });
         setPosts(newData);
       })
@@ -113,101 +95,98 @@ export default function Home() {
     })
       .then((res) => res.json())
       .then((result) => {
-        const newData = posts.filter((item) => {
-          return item._id !== result._id;
-        });
+        const newData = posts.filter((item) => item._id !== result._id);
         setPosts(newData);
       });
   };
 
   return (
     <>
-      {posts.length == 0 ? (
-        <div>Loading ...</div>
+      {posts.length === 0 ? (
+        <div className="home-loading">Loading posts...</div>
       ) : (
-        <Card>
+        <div className="home-container">
           {posts.map((item) => (
-            <div className="card home-card" key={item._id}>
-              <h5 style={{ padding: "5px" }}>
-                <Link
-                  to={
-                    item.postedBy._id !== state._id
-                      ? "/profile/" + item.postedBy._id
-                      : "/profile"
-                  }
-                >
-                  {item.postedBy.name}
-                </Link>{" "}
-                {item.postedBy._id == state._id && (
-                  <i
-                    className="material-icons"
-                    style={{
-                      float: "right",
-                      cursor: "pointer",
-                    }}
+            <Card className="post-card" key={item._id}>
+              <div className="post-header">
+                <div className="post-author">
+                  <Link
+                    to={
+                      item.postedBy._id !== state._id
+                        ? "/profile/" + item.postedBy._id
+                        : "/profile"
+                    }
+                  >
+                    {item.postedBy.name}
+                  </Link>
+                </div>
+                {item.postedBy._id === state._id && (
+                  <button
+                    type="button"
+                    className="icon-button delete-button"
+                    aria-label="Delete post"
                     onClick={() => deletePost(item._id)}
                   >
-                    delete
-                  </i>
+                    <i className="material-icons">delete</i>
+                  </button>
                 )}
-              </h5>
-              <div className="center">
+              </div>
+
+              <Card.Body className="post-body">
                 <h6>{item.title}</h6>
                 <p>{item.body}</p>
+              </Card.Body>
+
+              <div className="post-image">
+                <img src={item.photo} alt={item.title || "Post image"} />
               </div>
-              <div className="card-image shadow-lg card">
-                <img src={item.photo} />
-              </div>
-              <div className="card-content shadow-lg">
-                {item.likes.includes(state._id) ? (
-                  <i
-                    className="material-icons"
-                    onClick={() => {
-                      unlikePost(item._id);
-                    }}
-                  >
-                    thumb_down
-                  </i>
-                ) : (
-                  <i
-                    className="material-icons"
-                    onClick={() => {
-                      likePost(item._id);
-                    }}
-                  >
-                    thumb_up
-                  </i>
-                )}
-                <h6>{item.likes.length} likes</h6>
-                {item.comments.map((record) => {
-                  return (
-                    <h6 key={record._id}>
-                      <span style={{ fontWeight: "500" }}>
-                        {record.postedBy.name}
-                      </span>{" "}
-                      {record.text}
-                    </h6>
-                  );
-                })}
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    makeComment(e.target[0].value, item._id);
-                  }}
+
+              <div className="post-actions">
+                <button
+                  type="button"
+                  className="icon-button"
+                  onClick={() =>
+                    item.likes.includes(state._id)
+                      ? unlikePost(item._id)
+                      : likePost(item._id)
+                  }
+                  aria-label={
+                    item.likes.includes(state._id) ? "Unlike post" : "Like post"
+                  }
                 >
-                  <input type="text" placeholder="add a comment" />
-                </form>
+                  <i className="material-icons">
+                    {item.likes.includes(state._id) ? "thumb_down" : "thumb_up"}
+                  </i>
+                </button>
+                <span className="like-count">{item.likes.length} likes</span>
               </div>
-            </div>
+
+              <div className="comment-list">
+                {item.comments.map((record) => (
+                  <div className="comment-entry" key={record._id}>
+                    <strong>{record.postedBy.name}</strong>
+                    <span>{record.text}</span>
+                  </div>
+                ))}
+              </div>
+
+              <form
+                className="comment-form"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  makeComment(e.target[0].value, item._id);
+                  e.target.reset();
+                }}
+              >
+                <input type="text" placeholder="Add a comment" />
+                <button type="submit" className="comment-submit">
+                  Post
+                </button>
+              </form>
+            </Card>
           ))}
-        </Card>
+        </div>
       )}
-      {/* <Pagination
-            itemsCount={totalCount}
-            pageSize={pageSize}
-            currentPage={currentPage}
-            onPageChange={(currentPage) => handlePageChange(currentPage)}
-          /> */}
     </>
   );
 }
