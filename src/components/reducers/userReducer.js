@@ -16,7 +16,8 @@ followers:action.payload.followers
 if(action.type === "UPDATEPIC"){
     return{
         ...state,
-        pic:action.payload
+        photo: action.payload,
+        pic: action.payload,
     }
 }
     return state

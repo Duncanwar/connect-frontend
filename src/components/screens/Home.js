@@ -12,15 +12,54 @@ export default function Home() {
 
   useEffect(() => {
     getAllPosts();
-  }, [posts]);
+  }, []);
 
   const getAllPosts = async () => {
     try {
       const { data } = await axios.get(`${url}/posts`);
-      setPosts(data.data);
+      // transform posts coming from a simplified SQL-style API
+      const transformed = (data.data || []).map((p) => transformPost(p));
+      setPosts(transformed);
     } catch (error) {
       M.toast({ html: error.message });
     }
+  };
+
+  const transformPost = (p) => {
+    // backend may return either `id` or `_id`
+    const id = p.id  || String(p.id || "");
+    const likesCount = p.likesCount || p.likes?.length || 0;
+    const commentsCount = p.commentsCount || p.comments?.length || 0;
+
+    // Create a placeholder likes array so the UI can use `.length`
+    // and still use `.includes()` to check for the current user when
+    // the backend provides a `likedByCurrentUser` boolean.
+    const likes = Array.from({ length: likesCount }).map((_, i) => {
+      // if backend indicates the current user liked this post, include their id
+      if (p.likedByCurrentUser) return state?._id || "current_user";
+      return `like_${i}`;
+    });
+
+    const comments = Array.isArray(p.comments) ? p.comments : [];
+
+    return {
+      _id: id,
+      title: p.title || p.post_title || "",
+      body: p.body || p.post_body || "",
+      photo: p.photo || p.image || "",
+      postedBy: {
+        _id: p.postedBy || p.postedById || p.posted_by || null,
+        name: p.postedByName || p.postedBy_name || p.postedByName || "",
+        photo: p.postedByPhoto || null,
+      },
+      likes,
+      comments,
+      // keep raw counts for potential future uses
+      likesCount,
+      commentsCount,
+      createdAt: p.createdAt || p.created_at,
+      updatedAt: p.updatedAt || p.updated_at,
+    };
   };
 
   const likePost = async (id) => {
@@ -34,9 +73,8 @@ export default function Home() {
     })
       .then((res) => res.json())
       .then((result) => {
-        const newData = posts.map((item) => {
-          return item._id === result._id ? result : item;
-        });
+        const mapped = transformPost(result);
+        const newData = posts.map((item) => (item._id === mapped._id ? mapped : item));
         setPosts(newData);
       })
       .catch((err) => {
@@ -55,9 +93,8 @@ export default function Home() {
     })
       .then((res) => res.json())
       .then((result) => {
-        const newData = posts.map((item) => {
-          return item._id === result._id ? result : item;
-        });
+        const mapped = transformPost(result);
+        const newData = posts.map((item) => (item._id === mapped._id ? mapped : item));
         setPosts(newData);
       })
       .catch((err) => {
@@ -76,9 +113,8 @@ export default function Home() {
     })
       .then((res) => res.json())
       .then((result) => {
-        const newData = posts.map((item) => {
-          return item._id === result._id ? result : item;
-        });
+        const mapped = transformPost(result);
+        const newData = posts.map((item) => (item._id === mapped._id ? mapped : item));
         setPosts(newData);
       })
       .catch((err) => {
@@ -95,7 +131,9 @@ export default function Home() {
     })
       .then((res) => res.json())
       .then((result) => {
-        const newData = posts.filter((item) => item._id !== result._id);
+        // result may be the deleted item or a small payload; normalize id
+        const deletedId = result._id || result.id || postid;
+        const newData = posts.filter((item) => item._id !== deletedId);
         setPosts(newData);
       });
   };

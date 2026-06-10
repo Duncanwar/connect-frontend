@@ -1,136 +1,106 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useMemo } from "react";
 import { UserContext } from "../../App";
-import axios from "axios";
+import M from "materialize-css";
+import * as postService from "../../services/postService";
+import { uploadImage } from "../../services/cloudinaryService";
+import { transformUser } from "../../utils/transformers";
 
-function Profile() {
-  const url = process.env.REACT_APP_BACKEND_URL;
-  const [mypics, setPics] = useState([]);
+export default function Profile() {
+  const [myPosts, setMyPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [uploading, setUploading] = useState(false);
   const { state, dispatch } = useContext(UserContext);
-  const [image, setImage] = useState("");
-  const [data, setData] = useState([]);
-  const [isPicUpdated, setIsPicUpdated] = useState(false);
+  const user = useMemo(() => transformUser(state), [state]);
 
   useEffect(() => {
-    getAllPics();
-  }, [isPicUpdated]);
+    let cancelled = false;
 
-  const getAllPics = async () => {
+    async function loadPosts() {
+      try {
+        const { data } = await postService.getMyPosts();
+        if (!cancelled) {
+          setMyPosts(data.data || []);
+        }
+      } catch (error) {
+        if (!cancelled) {
+          M.toast({ html: error.message });
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadPosts();
+    return () => {
+      cancelled = true;
+    };
+    window.reload();
+  }, [user.photo]);
+
+  const handlePhotoChange = async (file) => {
+    if (!file) return;
+
+    setUploading(true);
     try {
-      const result = await axios.get(`${url}/posts/myposts`, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("jwt"),
-        },
-      });
-      setPics(result.data.data);
-      setData(state);
+      const imageUrl = await uploadImage(file);
+      const { data } = await postService.updateProfilePic(imageUrl);
+      const updatedUser = { ...state, photo: data.photo };
+
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      dispatch({ type: "UPDATEPIC", payload: data.photo });
     } catch (error) {
-      console.error(error);
+      M.toast({ html: error.message });
+    } finally {
+      setUploading(false);
     }
   };
 
-  useEffect(() => {
-    if (image) {
-      const data = new FormData();
-      data.append("file", image);
-      data.append("upload_preset", "insta-clone");
-      data.append("cloud_name", "semugeshi");
-      fetch(process.env.REACT_APP_CLOUDINARY_API, {
-        method: "post",
-        body: data,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          fetch(`${url}/posts/updatepic`, {
-            method: "put",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + localStorage.getItem("jwt"),
-            },
-            body: JSON.stringify({
-              pic: data.url,
-            }),
-          })
-            .then((res) => res.json())
-            .then((result) => {
-              localStorage.setItem(
-                "user",
-                JSON.stringify({ ...state, photo: result.photo })
-              );
-              dispatch({ type: "UPDATEPIC", payload: result.photo });
-              setIsPicUpdated(true);
-              window.location.reload(false);
-            });
-        })
-        .catch((err) => console.log(err));
-    }
-  }, [image]);
-
-  const changePhoto = (file) => {
-    setImage(file);
-  };
+  if (loading) {
+    return <div className="home-loading">Loading profile...</div>;
+  }
 
   return (
-    <div style={{ maxWidth: "550px", margin: "0px auto" }}>
-      <div
-        style={{
-          margin: "18px 0px",
-          borderBottom: "1px solid grey",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-          }}
-        >
-          <div>
-            <img
-              style={{ width: "160px", height: "160px", borderRadius: "80px" }}
-              src={state ? state.photo : "loading..."}
-            />
-          </div>
-          <div>
-            <h4>{state ? state.name : "loading"}</h4>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                width: "108%",
-              }}
-            >
-              <h5>{mypics.length} posts</h5>
-              <h5>{state ? state.followers.length : "0"} followers</h5>
-              <h5>{state ? state.following.length : "0"} following</h5>
+    <div className="profile-container">
+      <div className="profile-header">
+        <div className="profile-info">
+          <img
+            className="profile-avatar"
+            src={user.photo || "https://emedia1.nhs.wales/HEIW2/cache/file/F4C33EF0-69EE-4445-94018B01ADCF6FD4.png"}
+            alt={user.name || "Profile"}
+          />
+          <div className="profile-stats">
+            <h4>{user.name || "User"}</h4>
+            <div className="profile-counts">
+              <span>{myPosts.length} posts</span>
+              <span>{user.followers.length} followers</span>
+              <span>{user.following.length} following</span>
             </div>
           </div>
         </div>
-        <div className="file-field input-field" style={{ margin: "10px" }}>
-          <div className="btn #64b5f6 blue darken-1">
-            <span>Upload profile</span>
-            <input
-              type="file"
-              title=""
-              onChange={(e) => changePhoto(e.target.files[0])}
-            />
-          </div>
-          <div className="file-path-wrapper">
-            <input className="file-path validate" type="text" />
-          </div>
-        </div>
+
+        <label className="profile-upload">
+          <span>{uploading ? "Uploading..." : "Upload profile photo"}</span>
+          <input
+            type="file"
+            accept="image/*"
+            disabled={uploading}
+            onChange={(e) => handlePhotoChange(e.target.files[0])}
+          />
+        </label>
       </div>
+
       <div className="gallery">
-        {mypics.map((item) => {
-          return (
-            <img
-              key={item._id}
-              className="item"
-              src={item.photo}
-              alt={item.title}
-            />
-          );
-        })}
+        {myPosts.map((item) => (
+          <img
+            key={item._id}
+            className="item"
+            src={item.photo}
+            alt={item.title}
+          />
+        ))}
       </div>
     </div>
   );
 }
-export default Profile;

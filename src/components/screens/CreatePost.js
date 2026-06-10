@@ -65,6 +65,7 @@ const CreatePost = () => {
         textAlign: "center",
       }}
     >
+      <h2>Create Post</h2>
       <input
         type="text"
         placeholder="title"

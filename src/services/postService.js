@@ -1,18 +1,48 @@
 import http from "../utils/httpService";
+import { API_URL, getAuthHeaders, getJsonHeaders } from "../utils/api";
 
-const { REACT_APP_BACKEND_URL: apiUrl } = process.env;
-
-function postUrl(id) {
-  return `${apiUrl}/${id}`;
+export function getPosts() {
+  return http.get(`${API_URL}/posts`);
 }
 
-export function getPosts(headers) {
-  return http.get(`${apiUrl}/posts`, headers);
+export function getMyPosts() {
+  return http.get(`${API_URL}/posts/myposts`, { headers: getAuthHeaders() });
 }
 
-export function like(id, headers) {
-  return http.put(`${apiUrl}/like`, { headers, postId: id });
+export function likePost(postId) {
+  return http.put(
+    `${API_URL}/posts/like`,
+    { postId },
+    { headers: getJsonHeaders() }
+  );
 }
-export function unLike(headers) {
-  return http.put(`${apiUrl}/unlike`, headers);
+
+export function unlikePost(postId) {
+  return http.put(
+    `${API_URL}/posts/unlike`,
+    { postId },
+    { headers: getJsonHeaders() }
+  );
+}
+
+export function commentOnPost(postId, text) {
+  return http.put(
+    `${API_URL}/posts/comment`,
+    { postId, text },
+    { headers: getJsonHeaders() }
+  );
+}
+
+export function deletePost(postId) {
+  return http.delete(`${API_URL}/posts/${postId}`, {
+    headers: getAuthHeaders(),
+  });
+}
+
+export function updateProfilePic(pic) {
+  return http.put(
+    `${API_URL}/users/updatepic`,
+    { pic },
+    { headers: getJsonHeaders() }
+  );
 }
