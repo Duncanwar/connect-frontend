@@ -8,11 +8,12 @@ const Profile = () => {
   const [userProfile, setProfile] = useState(null);
   const { userid } = useParams();
   const { state, dispatch } = useContext(UserContext);
+  const followingIds = state?.following?.map(String) || [];
   const [showFollow, setFollow] = useState(
-    state ? !state.following.includes(userid) : true
+    state ? !followingIds.includes(String(userid)) : true
   );
   useEffect(() => {
-    fetch(`${url}/user/${userid}`, {
+    fetch(`${url}/users/${userid}`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
@@ -116,10 +117,10 @@ const Profile = () => {
                 }}
               >
                 <h5>{userProfile.post.length} posts</h5>
-                <h5 onClick={() => viewfollow(userProfile.user._id)}>
-                  {userProfile.user.followers.length} followers
+                <h5 onClick={() => viewfollow(userProfile.user.id)}>
+                  {userProfile.user.followers} followers
                 </h5>
-                <h5>{userProfile.user.following.length}following</h5>
+                <h5>{userProfile.user.following}following</h5>
                 {showFollow ? (
                   <Button onClick={() => viewfollow()}>follow</Button>
                 ) : (

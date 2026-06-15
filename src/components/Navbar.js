@@ -15,15 +15,6 @@ const NavBar = () => {
   const renderList = () => {
     if (state) {
       return [
-        <li key="1">
-          <i
-            data-target="modal1"
-            className="alrge material-icons modal-trigger"
-            style={{ color: "black" }}
-          >
-            search
-          </i>
-        </li>,
         <li key="2">
           <Link to="/profile">Profile</Link>
         </li>,
@@ -79,7 +70,7 @@ const NavBar = () => {
           {renderList()}
         </ul>
       </div>
-      <div
+      {/* <div
         id="modal1"
         className="modal"
         ref={searchModal}
@@ -115,7 +106,7 @@ const NavBar = () => {
             Agree
           </button>
         </div>
-      </div>
+      </div> */}
     </nav>
   );
 };

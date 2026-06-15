@@ -20,7 +20,6 @@ const Login = () => {
       return;
     }
     // const { data } = await auth.login(email, password);
-    // console.log(data);
     fetch(`${process.env.REACT_APP_BACKEND_URL}/login`, {
       method: "post",
       headers: {
@@ -32,11 +31,12 @@ const Login = () => {
         email,
       }),
     })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.error) {
-          M.toast({ html: data.error });
-        } else {
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.error) {
+        M.toast({ html: data.error });
+      } else {
+          console.log(data);
           localStorage.setItem("jwt", data.token);
           localStorage.setItem("user", JSON.stringify(data.data.user));
 

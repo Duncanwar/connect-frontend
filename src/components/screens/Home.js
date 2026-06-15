@@ -20,23 +20,23 @@ export default function Home() {
       // transform posts coming from a simplified SQL-style API
       const transformed = (data.data || []).map((p) => transformPost(p));
       setPosts(transformed);
+      console.log("Fetched posts:", transformed);
     } catch (error) {
       M.toast({ html: error.message });
     }
   };
 
   const transformPost = (p) => {
-    // backend may return either `id` or `_id`
+    console.log("Transforming post:", p);
     const id = p.id  || String(p.id || "");
     const likesCount = p.likesCount || p.likes?.length || 0;
-    const commentsCount = p.commentsCount || p.comments?.length || 0;
+    const commentsCount = p.commentsCount || p.comments || 0;
 
     // Create a placeholder likes array so the UI can use `.length`
     // and still use `.includes()` to check for the current user when
     // the backend provides a `likedByCurrentUser` boolean.
     const likes = Array.from({ length: likesCount }).map((_, i) => {
-      // if backend indicates the current user liked this post, include their id
-      if (p.likedByCurrentUser) return state?._id || "current_user";
+      if (p.likedByCurrentUser) return state?.id || "current_user";
       return `like_${i}`;
     });
 
@@ -150,7 +150,7 @@ export default function Home() {
                 <div className="post-author">
                   <Link
                     to={
-                      item.postedBy._id !== state._id
+                      item.postedBy.id !== state.id
                         ? "/profile/" + item.postedBy._id
                         : "/profile"
                     }
@@ -200,15 +200,16 @@ export default function Home() {
               </div>
 
               <div className="comment-list">
-                {item.comments.map((record) => (
-                  <div className="comment-entry" key={record._id}>
-                    <strong>{record.postedBy.name}</strong>
+                {console.log(item,"item")}
+                 {item.comments.map((record) => (
+                  <div className="comment-entry" key={record.id}>
+                    <strong>{item.postedBy.Name}</strong>
                     <span>{record.text}</span>
                   </div>
                 ))}
               </div>
 
-              <form
+               <form
                 className="comment-form"
                 onSubmit={(e) => {
                   e.preventDefault();
