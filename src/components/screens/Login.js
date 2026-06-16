@@ -51,38 +51,54 @@ const Login = () => {
   };
 
   return (
-    <div className="flex min-h-full flex-1 flex-cool justify-center px-6 py-12 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          Sign in to your account
-        </h2>
-      </div>
-      <input
-        className="px-12"
-        type="text"
-        placeholder="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+    <div className="auth-page">
+      <div className="auth-card">
+        <div className="auth-header">
+          <h2>Welcome back</h2>
+          <p>Sign in to your Connect account and continue sharing updates.</p>
+        </div>
 
-      <button
-        className="btn waves-effect waves-light #64b5f6 blue lighten-2 "
-        onClick={() => PostData()}
-      >
-        Login
-      </button>
-      <h5>
-        <Link to="/signup">You don't have an account ?</Link>
-      </h5>
-      <h6>
-        <Link to="/reset">Forgot Password </Link>
-      </h6>
+        <div className="auth-body">
+          <div className="auth-field">
+            <label htmlFor="login-email">Email</label>
+            <input
+              id="login-email"
+              type="text"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+
+          <div className="auth-field">
+            <label htmlFor="login-password">Password</label>
+            <input
+              id="login-password"
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+
+          <button
+            type="button"
+            className="btn waves-effect waves-light auth-submit"
+            onClick={() => PostData()}
+          >
+            Login
+          </button>
+
+          <div className="auth-links">
+            <Link className="auth-link" to="/signup">
+              Create an account
+            </Link>
+            <Link className="auth-link" to="/reset">
+              Forgot password?
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

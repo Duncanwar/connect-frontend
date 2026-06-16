@@ -18,14 +18,143 @@ h2 {
 }
 
 .mycard {
+  align-items: center;
+  justify-content: center;
+  display: flex;
   margin-top: 30px;
 }
 
+.auth-page {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+  background: radial-gradient(circle at top, rgba(96, 165, 250, 0.18), transparent 30%),
+    linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
 .auth-card {
-  padding: 20px;
-  text-align: center;
-  max-width: 400px;
-  margin: 10px auto;
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  padding: 36px 30px;
+  border-radius: 26px;
+  box-shadow: 0 30px 90px rgba(15, 23, 42, 0.12);
+}
+
+.auth-header h2 {
+  margin: 0 0 10px;
+  font-size: 2rem;
+  letter-spacing: -0.04em;
+  color: #111827;
+}
+
+.auth-header p {
+  margin: 0;
+  color: #475569;
+  line-height: 1.7;
+}
+
+.auth-body {
+  margin-top: 28px;
+  display: grid;
+  gap: 20px;
+}
+
+.auth-field label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.auth-field input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 16px;
+  background: #ffffff;
+  color: #0f172a;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-field input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.auth-submit {
+  width: 100%;
+  border-radius: 999px;
+  padding:  0;
+  font-weight: 700;
+  background: #2563eb;
+  color: #ffffff;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.auth-submit:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.auth-links {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 0.95rem;
+}
+
+.auth-link {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
+/* Signup / auth input with icons */
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.input-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: #f1f5f9;
+  color: #64748b;
+  border-radius: 10px;
+  flex: 0 0 40px;
+  font-size: 20px;
+}
+
+.input-row input {
+  flex: 1 1 auto;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.field-help {
+  display: block;
+  margin-top: 6px;
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+.auth-card--signup {
+  max-width: 520px;
+  padding: 34px 36px;
 }
 
 .input-field input[type="text"]:focus {
@@ -151,6 +280,47 @@ h2 {
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
+}
+
+.post-header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.post-edit-form {
+  display: grid;
+  gap: 14px;
+}
+
+.post-edit-form input,
+.post-edit-form textarea {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 14px;
+  padding: 12px 14px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-edit-form input:focus,
+.post-edit-form textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.edit-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cancel-button {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+.cancel-button:hover {
+  background: #e2e8f0;
 }
 
 .like-count {

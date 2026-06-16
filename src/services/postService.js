@@ -39,6 +39,12 @@ export function deletePost(postId) {
   });
 }
 
+export function updatePost(postId, postData) {
+  return http.put(`${API_URL}/posts/${postId}`, postData, {
+    headers: getJsonHeaders(),
+  });
+}
+
 export function updateProfilePic(pic) {
   return http.put(
     `${API_URL}/users/updatepic`,
